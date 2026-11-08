@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Liga Live Scores Today | Results &amp; Fixtures | KickPulse</title>
+<meta name="description" content="La Liga live scores, results and fixtures today. Follow Real Madrid, Barcelona, Atletico and every match with stats and lineups on KickPulse.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://kickpulse-football.vercel.app/la-liga-live-scores/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KickPulse">
+<meta property="og:title" content="La Liga Live Scores Today | Results &amp; Fixtures | KickPulse">
+<meta property="og:description" content="La Liga live scores, results and fixtures today. Follow Real Madrid, Barcelona, Atletico and every match with stats and lineups on KickPulse.">
+<meta property="og:url" content="https://kickpulse-football.vercel.app/la-liga-live-scores/">
+<meta property="og:image" content="https://kickpulse-football.vercel.app/assets/og-la-liga.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="La Liga Live Scores Today | Results &amp; Fixtures | KickPulse">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La Liga Live Scores Today | Results &amp; Fixtures | KickPulse">
+<meta name="twitter:description" content="La Liga live scores, results and fixtures today. Follow Real Madrid, Barcelona, Atletico and every match with stats and lineups on KickPulse.">
+<meta name="twitter:image" content="https://kickpulse-football.vercel.app/assets/og-la-liga.jpg">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<script src="/site-config.js"></script>
+<script defer src="/assets/boot.edab34b4.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KickPulse","item":"https://kickpulse-football.vercel.app/"},{"@type":"ListItem","position":2,"name":"La Liga live scores","item":"https://kickpulse-football.vercel.app/la-liga-live-scores/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do La Liga scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each La Liga match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Can I see Real Madrid and Barcelona matches here?","acceptedAnswer":{"@type":"Answer","text":"Yes. Type a club name in the search box at the top to find its match for the selected date."}},{"@type":"Question","name":"Is KickPulse free to use for La Liga scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}}]}</script>
+</head>
+<body data-league="esp.1">
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="logo" href="/" aria-label="KickPulse home"><span class="mark">K</span><span>Kick<b>Pulse</b></span></a>
+    <label class="search"><input id="q" type="search" placeholder="Search team or league" autocomplete="off" aria-label="Search team or league"></label>
+    <span class="pill" id="livePill"><span class="dot"></span><span><b id="livePillN">0</b> <span class="lbl">live now</span></span></span>
+    <button class="icon" id="refresh" aria-label="Refresh scores" title="Refresh"><span>&#8635;</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>La Liga <span>live scores today</span></h1>
+    <p>Live Spanish La Liga scores, results and fixtures, including Real Madrid, Barcelona and Atletico Madrid.</p>
+    <div class="crumbs"><a href="/">KickPulse</a> &rsaquo; La Liga live scores</div>
+    <div class="chips">
+      <span class="chip live"><b id="cLive">0</b> live now</span>
+      <span class="chip"><b id="cMatches">0</b> matches</span>
+      <span class="chip"><b id="cLeagues">0</b> leagues</span>
+      <span class="chip" id="cUpd">Loading...</span>
+    </div>
+    <div class="pagesh" id="shareBar"></div>
+  </section>
+
+  <section class="controls">
+    <div class="dates" id="dates"></div>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-s="all">All <i id="tAll">0</i></button>
+      <button class="tab" data-s="live">Live <i id="tLive">0</i></button>
+      <button class="tab" data-s="fin">Finished <i id="tFin">0</i></button>
+      <button class="tab" data-s="pre">Upcoming <i id="tPre">0</i></button>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="side" id="side" aria-label="Leagues"></nav>
+    <section id="list" aria-live="polite">
+      <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
+    </section>
+  </div>
+</main>
+
+<section class="wrap seo" aria-label="About La Liga">
+  <h2>About Spanish La Liga live scores</h2>
+  <p>La Liga is the top division of Spanish football, with 20 clubs playing from August to May. Real Madrid, Barcelona and Atletico Madrid are among its best-known clubs. This page shows the live score, minute and status of each match, and every match opens into a detailed view with events, statistics and lineups when available.</p>
+  <p>Spanish clubs often play later in the evening than clubs in other countries, so La Liga matches can start late at night in Pakistan. The Upcoming tab shows every match that has not started yet, and the Finished tab shows completed results with the final score. Other clubs you can follow here include Sevilla, Valencia and Villarreal.</p>
+  <h2 style="margin-top:22px">How to use this page</h2>
+  <ol><li>Pick a date in the bar at the top. Today is selected by default, and this page moves ahead to the next match day when the competition has no games today.</li><li>Use the All, Live, Finished and Upcoming tabs to narrow the list.</li><li>Tap a match to open its timeline, statistics, lineups and match information.</li><li>Search for a club or a competition in the search box.</li><li>Share a match with friends using the share buttons.</li></ol>
+  <h2 style="margin-top:22px">Frequently asked questions</h2>
+  <h3>How often do La Liga scores update?</h3><p>While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top.</p><h3>What can I see for each La Liga match?</h3><p>Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match.</p><h3>Can I see Real Madrid and Barcelona matches here?</h3><p>Yes. Type a club name in the search box at the top to find its match for the selected date.</p><h3>Is KickPulse free to use for La Liga scores?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times.</p>
+  <h2 style="margin-top:26px">More live scores</h2>
+  <div class="links">
+      <a href="/">All leagues</a>
+      <a href="/champions-league-live-scores/">Champions League</a>
+      <a href="/europa-league-live-scores/">Europa League</a>
+      <a href="/conference-league-live-scores/">Conference League</a>
+      <a href="/nations-league-live-scores/">Nations League</a>
+      <a href="/premier-league-live-scores/">Premier League</a>
+      <a href="/serie-a-live-scores/">Serie A</a>
+      <a href="/bundesliga-live-scores/">Bundesliga</a>
+      <a href="/ligue-1-live-scores/">Ligue 1</a>
+      <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
+      <a href="/mls-live-scores/">MLS</a>
+      <a href="/fa-cup-live-scores/">FA Cup</a>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <nav class="fnav" aria-label="Footer"><a href="/">Home</a><a href="/about/">About</a><a href="/privacy-policy/">Privacy policy</a></nav>
+    <div id="socialLinks" class="links"></div>
+    <p>KickPulse shows live football scores, fixtures, results, match events, statistics and lineups. Times are shown in your own time zone (<span id="tz"></span>).</p>
+    <p>Scores come from ESPN's public data feed and can be a little delayed or occasionally unavailable. KickPulse is not affiliated with ESPN or any league or club. We use privacy-friendly analytics to count visits.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Match details">
+    <button class="x" id="mx" aria-label="Close">&times;</button>
+    <div id="mbody"></div>
+  </div>
+</div>
+
+<noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
+<script defer src="/assets/app.ccb1c7ed.min.js"></script>
+</body>
+</html>

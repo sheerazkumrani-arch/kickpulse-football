@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Football Scores Today | Every League | KickPulse</title>
+<meta name="description" content="Live football scores, fixtures and results from the Champions League, Premier League, La Liga, Serie A and more. Match stats, events and lineups.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://kickpulse-football.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KickPulse">
+<meta property="og:title" content="Live Football Scores Today | Every League | KickPulse">
+<meta property="og:description" content="Live football scores, fixtures and results from the Champions League, Premier League, La Liga, Serie A and more. Match stats, events and lineups.">
+<meta property="og:url" content="https://kickpulse-football.vercel.app/">
+<meta property="og:image" content="https://kickpulse-football.vercel.app/assets/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Live Football Scores Today | Every League | KickPulse">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Live Football Scores Today | Every League | KickPulse">
+<meta name="twitter:description" content="Live football scores, fixtures and results from the Champions League, Premier League, La Liga, Serie A and more. Match stats, events and lineups.">
+<meta name="twitter:image" content="https://kickpulse-football.vercel.app/assets/og-home.jpg">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<script src="/site-config.js"></script>
+<script defer src="/assets/boot.edab34b4.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"KickPulse","url":"https://kickpulse-football.vercel.app/","description":"Live football scores, fixtures and results from the Champions League, Premier League, La Liga, Serie A and more. Match stats, events and lineups.","inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is KickPulse free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed, so they can be delayed or unavailable at times."}},{"@type":"Question","name":"How often are the scores updated?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, the page checks for new scores about every 30 seconds. At other times it checks about every 90 seconds, and you can press the refresh button at any moment."}},{"@type":"Question","name":"Which leagues are covered?","acceptedAnswer":{"@type":"Answer","text":"The page covers the Champions League, Europa League, Conference League, Nations League, World Cup and qualifiers, the top European leagues, domestic cups, the Americas, Asia and Africa, plus many other competitions in the Other competitions group."}}]}</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="logo" href="/" aria-label="KickPulse home"><span class="mark">K</span><span>Kick<b>Pulse</b></span></a>
+    <label class="search"><input id="q" type="search" placeholder="Search team or league" autocomplete="off" aria-label="Search team or league"></label>
+    <span class="pill" id="livePill"><span class="dot"></span><span><b id="livePillN">0</b> <span class="lbl">live now</span></span></span>
+    <button class="icon" id="refresh" aria-label="Refresh scores" title="Refresh"><span>&#8635;</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Live football scores, <span>every league in the world</span></h1>
+    <p>Follow the Champions League, Europa League, Nations League, Premier League, La Liga, Serie A, Bundesliga and hundreds more. Tap any match for events, stats and lineups.</p>
+    <div class="chips">
+      <span class="chip live"><b id="cLive">0</b> live now</span>
+      <span class="chip"><b id="cMatches">0</b> matches</span>
+      <span class="chip"><b id="cLeagues">0</b> leagues</span>
+      <span class="chip" id="cUpd">Loading...</span>
+    </div>
+    <div class="pagesh" id="shareBar"></div>
+  </section>
+
+  <section class="controls">
+    <div class="dates" id="dates"></div>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-s="all">All <i id="tAll">0</i></button>
+      <button class="tab" data-s="live">Live <i id="tLive">0</i></button>
+      <button class="tab" data-s="fin">Finished <i id="tFin">0</i></button>
+      <button class="tab" data-s="pre">Upcoming <i id="tPre">0</i></button>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="side" id="side" aria-label="Leagues"></nav>
+    <section id="list" aria-live="polite">
+      <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
+    </section>
+  </div>
+</main>
+
+<section class="wrap seo" aria-label="About KickPulse">
+  <h2>Live football scores for every league</h2>
+  <p>KickPulse is a fast, free way to follow football around the world. The page lists matches from the Champions League, Europa League, Nations League, the Premier League, La Liga, Serie A, Bundesliga, Ligue 1 and many more competitions, grouped by league and shown in your own time zone. Live matches show the current minute, finished matches show the final score, and upcoming matches show the kick-off time.</p>
+  <h2 style="margin-top:22px">What you can do on KickPulse</h2>
+  <ul>
+    <li>See every live match now with one tap on the Live tab.</li>
+    <li>Browse results from yesterday and fixtures for the next days using the date bar or the calendar.</li>
+    <li>Open any match for its timeline of goals, cards and substitutions.</li>
+    <li>Compare team statistics such as possession, shots and corners when the data is available.</li>
+    <li>Check lineups, the stadium and other match information, then share the match with friends.</li>
+  </ul>
+  <h2 style="margin-top:22px">Popular leagues</h2>
+  <p>Jump straight to the live scores of your favourite competition.</p>
+  <div class="links">
+      <a href="/champions-league-live-scores/">Champions League</a>
+      <a href="/europa-league-live-scores/">Europa League</a>
+      <a href="/conference-league-live-scores/">Conference League</a>
+      <a href="/nations-league-live-scores/">Nations League</a>
+      <a href="/premier-league-live-scores/">Premier League</a>
+      <a href="/la-liga-live-scores/">La Liga</a>
+      <a href="/serie-a-live-scores/">Serie A</a>
+      <a href="/bundesliga-live-scores/">Bundesliga</a>
+      <a href="/ligue-1-live-scores/">Ligue 1</a>
+      <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
+      <a href="/mls-live-scores/">MLS</a>
+      <a href="/fa-cup-live-scores/">FA Cup</a>
+  </div>
+  <h2 style="margin-top:26px">Frequently asked questions</h2>
+  <h3>Is KickPulse free to use?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed, so they can be delayed or unavailable at times.</p><h3>How often are the scores updated?</h3><p>While matches are live, the page checks for new scores about every 30 seconds. At other times it checks about every 90 seconds, and you can press the refresh button at any moment.</p><h3>Which leagues are covered?</h3><p>The page covers the Champions League, Europa League, Conference League, Nations League, World Cup and qualifiers, the top European leagues, domestic cups, the Americas, Asia and Africa, plus many other competitions in the Other competitions group.</p>
+</section>
+<footer>
+  <div class="wrap">
+    <nav class="fnav" aria-label="Footer"><a href="/">Home</a><a href="/about/">About</a><a href="/privacy-policy/">Privacy policy</a></nav>
+    <div id="socialLinks" class="links"></div>
+    <p>KickPulse shows live football scores, fixtures, results, match events, statistics and lineups. Times are shown in your own time zone (<span id="tz"></span>).</p>
+    <p>Scores come from ESPN's public data feed and can be a little delayed or occasionally unavailable. KickPulse is not affiliated with ESPN or any league or club. We use privacy-friendly analytics to count visits.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Match details">
+    <button class="x" id="mx" aria-label="Close">&times;</button>
+    <div id="mbody"></div>
+  </div>
+</div>
+
+<noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
+<script defer src="/assets/app.ccb1c7ed.min.js"></script>
+</body>
+</html>
