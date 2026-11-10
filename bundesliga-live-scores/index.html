@@ -28,10 +28,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
 <link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<link rel="stylesheet" href="/assets/league-table.dc4fb3ad.css">
 <script src="/site-config.js"></script>
 <script defer src="/assets/boot.edab34b4.min.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KickPulse","item":"https://kickpulse-football.vercel.app/"},{"@type":"ListItem","position":2,"name":"Bundesliga live scores","item":"https://kickpulse-football.vercel.app/bundesliga-live-scores/"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Bundesliga scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Bundesliga match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Does this page show lineups?","acceptedAnswer":{"@type":"Answer","text":"When the data provider has them, yes. Open a match and choose the Lineups tab."}},{"@type":"Question","name":"Is KickPulse free to use for Bundesliga scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Bundesliga scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Bundesliga match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Does this page show lineups?","acceptedAnswer":{"@type":"Answer","text":"When the data provider has them, yes. Open a match and choose the Lineups tab."}},{"@type":"Question","name":"Is KickPulse free to use for Bundesliga scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}},{"@type":"Question","name":"How many clubs are in the Bundesliga?","acceptedAnswer":{"@type":"Answer","text":"The Bundesliga has 18 clubs, and each club plays 34 matches in a season."}},{"@type":"Question","name":"What is Der Klassiker?","acceptedAnswer":{"@type":"Answer","text":"Der Klassiker is the name for the Bundesliga match between Bayern Munich and Borussia Dortmund, one of the biggest fixtures in German football."}}]}</script>
 </head>
 <body data-league="ger.1">
 
@@ -53,7 +54,7 @@
       <span class="chip live"><b id="cLive">0</b> live now</span>
       <span class="chip"><b id="cMatches">0</b> matches</span>
       <span class="chip"><b id="cLeagues">0</b> leagues</span>
-      <span class="chip" id="cUpd">Loading...</span>
+      <span class="chip" id="cUpd">Loading...</span> <a class="chip" href="#league-table">League table</a>
     </div>
     <div class="pagesh" id="shareBar"></div>
   </section>
@@ -74,6 +75,7 @@
       <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
     </section>
   </div>
+<section class="lt" id="league-table" aria-label="Bundesliga overview and table"><h2 id="ltTitle">Bundesliga overview and live table</h2><div id="ltIntro"><p>The Bundesliga is Germany&#x27;s top league, famous for full stadiums, quick attacking football and a Saturday late-afternoon slot that fans plan their weekend around. This page lists Bundesliga live scores and results, with every kick-off time converted to your own time zone.</p><p>Under the match list there is a live Bundesliga table. It changes as results come in, so you can follow the standings while the games are still being played. If you only need today&#x27;s match score for one club, type its name into the search box at the top.</p></div><div class="lt-head" id="ltHead"><h3>Bundesliga table</h3><small id="ltUpd">Loading...</small></div><div id="ltTable"><div class="sk"></div></div></section>
 </main>
 
 <section class="wrap seo" aria-label="About Bundesliga">
@@ -82,8 +84,13 @@
   <p>The Bundesliga is known for full stadiums and entertaining games. Follow the goals as they happen in the Timeline tab, where each goal, card and substitution appears with the minute and the player&#x27;s name when the provider shares it. Bayern Munich, Borussia Dortmund, Bayer Leverkusen, RB Leipzig, Eintracht Frankfurt and VfB Stuttgart are well-known names in the league.</p>
   <h2 style="margin-top:22px">How to use this page</h2>
   <ol><li>Pick a date in the bar at the top. Today is selected by default, and this page moves ahead to the next match day when the competition has no games today.</li><li>Use the All, Live, Finished and Upcoming tabs to narrow the list.</li><li>Tap a match to open its timeline, statistics, lineups and match information.</li><li>Search for a club or a competition in the search box.</li><li>Share a match with friends using the share buttons.</li></ol>
+  <h2 style="margin-top:22px">Bundesliga live scores and what makes the league different</h2>
+  <p>The Bundesliga is Germany's top division and one of the most entertaining leagues to follow because the goals keep coming. It has 18 clubs rather than 20, so the season is 34 rounds long, and it takes a winter break in the middle. Bayern Munich have dominated the table for years, Borussia Dortmund are their most famous challengers, and the league has a long list of lively clubs with big, passionate stadiums.</p>
+  <p>On this page you can see which Bundesliga matches are live now, what is coming up and the full-time scores from earlier in the day. German kick-off times, such as the classic Saturday late afternoon game, are changed to your own time zone automatically, so you can read the time and plan around it. If you want to know today's match score for a single club, type its name in the search box.</p>
+  <p>Open any match to read the timeline, compare shots and possession, and check the starting lineups once they are out. The game between Dortmund and Bayern, often called Der Klassiker, is one of the fixtures that people refresh the most.</p>
   <h2 style="margin-top:22px">Frequently asked questions</h2>
   <h3>How often do Bundesliga scores update?</h3><p>While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top.</p><h3>What can I see for each Bundesliga match?</h3><p>Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match.</p><h3>Does this page show lineups?</h3><p>When the data provider has them, yes. Open a match and choose the Lineups tab.</p><h3>Is KickPulse free to use for Bundesliga scores?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times.</p>
+  <h3>How many clubs are in the Bundesliga?</h3><p>The Bundesliga has 18 clubs, and each club plays 34 matches in a season.</p><h3>What is Der Klassiker?</h3><p>Der Klassiker is the name for the Bundesliga match between Bayern Munich and Borussia Dortmund, one of the biggest fixtures in German football.</p>
   <h2 style="margin-top:26px">More live scores</h2>
   <div class="links">
       <a href="/">All leagues</a>
@@ -98,6 +105,10 @@
       <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
       <a href="/mls-live-scores/">MLS</a>
       <a href="/fa-cup-live-scores/">FA Cup</a>
+      <a href="/world-cup-2026-live-scores/">World Cup 2026</a>
+      <a href="/football-matches-today/">Football matches today</a>
+      <a href="/soccer-live-scores/">Soccer live scores</a>
+      <a href="/real-madrid-live-score/">Real Madrid</a>
   </div>
 </section>
 <footer>
@@ -118,5 +129,6 @@
 
 <noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
 <script defer src="/assets/app.ccb1c7ed.min.js"></script>
+<script defer src="/assets/league-table.63fe6cb9.js"></script>
 </body>
 </html>

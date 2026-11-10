@@ -28,10 +28,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
 <link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<link rel="stylesheet" href="/assets/league-table.dc4fb3ad.css">
 <script src="/site-config.js"></script>
 <script defer src="/assets/boot.edab34b4.min.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"KickPulse","url":"https://kickpulse-football.vercel.app/","description":"Live football scores, fixtures and results from the Champions League, Premier League, La Liga, Serie A and more. Match stats, events and lineups.","inLanguage":"en"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is KickPulse free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed, so they can be delayed or unavailable at times."}},{"@type":"Question","name":"How often are the scores updated?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, the page checks for new scores about every 30 seconds. At other times it checks about every 90 seconds, and you can press the refresh button at any moment."}},{"@type":"Question","name":"Which leagues are covered?","acceptedAnswer":{"@type":"Answer","text":"The page covers the Champions League, Europa League, Conference League, Nations League, World Cup and qualifiers, the top European leagues, domestic cups, the Americas, Asia and Africa, plus many other competitions in the Other competitions group."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is KickPulse free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed, so they can be delayed or unavailable at times."}},{"@type":"Question","name":"How often are the scores updated?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, the page checks for new scores about every 30 seconds. At other times it checks about every 90 seconds, and you can press the refresh button at any moment."}},{"@type":"Question","name":"Which leagues are covered?","acceptedAnswer":{"@type":"Answer","text":"The page covers the Champions League, Europa League, Conference League, Nations League, World Cup and qualifiers, the top European leagues, domestic cups, the Americas, Asia and Africa, plus many other competitions in the Other competitions group."}},{"@type":"Question","name":"Where can I see football matches today?","acceptedAnswer":{"@type":"Answer","text":"Open the home page and the list shows the matches for today in your own time zone. Use the Live tab for games in progress, Upcoming for kick-offs still to come and Finished for results. The date bar lets you check yesterday or the days ahead."}},{"@type":"Question","name":"Does KickPulse stream matches live?","acceptedAnswer":{"@type":"Answer","text":"No. KickPulse shows live scores, fixtures, results, match events, statistics and lineups. It does not stream video. For a live broadcast, look for the official broadcaster or streaming service of the competition in your country."}},{"@type":"Question","name":"Is football the same as soccer?","acceptedAnswer":{"@type":"Answer","text":"Yes. Football is the common name in most countries. Soccer is the name used mainly in the United States and Canada. KickPulse covers the same matches whichever word you search with."}},{"@type":"Question","name":"Who won the FIFA World Cup 2026?","acceptedAnswer":{"@type":"Answer","text":"Spain won the 2026 FIFA World Cup, beating Argentina 1-0 after extra time in the final at MetLife Stadium in New Jersey on 19 July 2026. England finished third after a 6-4 win over France."}}]}</script>
 </head>
 <body>
 
@@ -73,6 +74,7 @@
       <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
     </section>
   </div>
+<section class="lt" id="league-table" data-home="1" hidden aria-label="League overview and table"><h2 id="ltTitle"></h2><div id="ltIntro"></div><div class="lt-head" id="ltHead"><h3>League table</h3><small id="ltUpd"></small></div><div id="ltTable"></div></section>
 </main>
 
 <section class="wrap seo" aria-label="About KickPulse">
@@ -86,6 +88,20 @@
     <li>Compare team statistics such as possession, shots and corners when the data is available.</li>
     <li>Check lineups, the stadium and other match information, then share the match with friends.</li>
   </ul>
+  <h2 style="margin-top:22px">Football today: how to find the match you want</h2>
+  <p>Most people land here with the same simple question: what football is on right now? The Live tab answers that in one tap. It shows every match that is being played at this moment, with the minute on the clock and the current score. If nothing is live, switch to Upcoming and you will see the next kick-offs for the day, or use the date bar to jump a day ahead and check tomorrow's fixtures. The list is built for people who check scores many times a day, so it stays short, loads fast on a phone and does not bury the score under banners.</p>
+  <p>Every kick-off time on the page is converted to the time zone of your device. That sounds like a small thing until you follow a Premier League game or a Champions League night from Karachi, Dubai, London or New York and have to do the arithmetic in your head. Here you just read the time and plan your evening. The time zone we detected is printed at the bottom of every page, so you can see it is correct.</p>
+  <h2 style="margin-top:22px">Live football score, today and every other day</h2>
+  <p>The page is a live football score tracker first. Scores refresh by themselves roughly every 30 seconds while a match is on, and a little slower when nothing is live, so you do not need to keep pressing reload. If you are impatient, the round arrow in the top bar refreshes at once. Finished matches stay on the list with their final score, which makes the page just as useful for catching up on yesterday's results as it is for following a game in progress. Looking for today's match score for a single club? Type the name into the search box and the list narrows down straight away.</p>
+  <p>Tap any match and a panel opens with the story of the game. You get the goals, cards and substitutions in order, team numbers such as possession, shots and corners, and the lineups when they are published. Not every match comes with every detail, because the data depends on what the feed provides for that fixture, but the big games are usually well covered.</p>
+  <h2 style="margin-top:22px">Football and soccer: same game, two names</h2>
+  <p>In most of the world the sport is called football. In the United States and Canada it is called soccer, mostly to keep it apart from American football. Because many readers search in one word or the other, this site works for both. If you came here looking for live soccer, soccer scores or the latest soccer news from the big leagues, you are in the right place. Our <a href="/soccer-live-scores/">soccer live scores</a> page explains how the two names are used and highlights Major League Soccer and the competitions that matter to American and Canadian fans.</p>
+  <h2 style="margin-top:22px">The FIFA World Cup, before and after 2026</h2>
+  <p>The FIFA World Cup 2026 was played in the United States, Canada and Mexico between 11 June and 19 July 2026, the first World Cup with 48 teams and 104 matches. Spain beat Argentina in the final. The tournament is over, but the results, fixtures and match details are still worth a look, and the same page style is used for the qualifiers that lead to the next World Cup. Our <a href="/world-cup-2026-live-scores/">World Cup 2026 live score and results page</a> keeps the story of the tournament in one place.</p>
+  <h2 style="margin-top:22px">Clubs and players people keep searching for</h2>
+  <p>Some names bring more visitors than any fixture list. Real Madrid, Barcelona, Manchester United, Liverpool and Arsenal draw a crowd every week, and many people simply want to know whether Lionel Messi or Cristiano Ronaldo is playing today. The search box handles all of that: type a club or a league and see whether there is a match on the selected date. For a dedicated page on one of the most followed clubs in the world, open <a href="/real-madrid-live-score/">Real Madrid live score and fixtures</a>.</p>
+  <h2 style="margin-top:22px">What KickPulse is, and what it is not</h2>
+  <p>KickPulse is a scores website. We show scores, schedules, results, events, statistics and lineups. We do not stream matches and we do not host video, so if you are looking for a live broadcast, check the official TV or streaming partner of the competition in your country. We would rather say that plainly than send you on a hunt for something this page does not do. Scores come from a public feed and can run a little behind the stadium, so treat them as a very fast guide rather than an official record.</p>
   <h2 style="margin-top:22px">Popular leagues</h2>
   <p>Jump straight to the live scores of your favourite competition.</p>
   <div class="links">
@@ -101,9 +117,14 @@
       <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
       <a href="/mls-live-scores/">MLS</a>
       <a href="/fa-cup-live-scores/">FA Cup</a>
+      <a href="/world-cup-2026-live-scores/">World Cup 2026</a>
+      <a href="/football-matches-today/">Football matches today</a>
+      <a href="/soccer-live-scores/">Soccer live scores</a>
+      <a href="/real-madrid-live-score/">Real Madrid</a>
   </div>
   <h2 style="margin-top:26px">Frequently asked questions</h2>
   <h3>Is KickPulse free to use?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed, so they can be delayed or unavailable at times.</p><h3>How often are the scores updated?</h3><p>While matches are live, the page checks for new scores about every 30 seconds. At other times it checks about every 90 seconds, and you can press the refresh button at any moment.</p><h3>Which leagues are covered?</h3><p>The page covers the Champions League, Europa League, Conference League, Nations League, World Cup and qualifiers, the top European leagues, domestic cups, the Americas, Asia and Africa, plus many other competitions in the Other competitions group.</p>
+  <h3>Where can I see football matches today?</h3><p>Open the home page and the list shows the matches for today in your own time zone. Use the Live tab for games in progress, Upcoming for kick-offs still to come and Finished for results. The date bar lets you check yesterday or the days ahead.</p><h3>Does KickPulse stream matches live?</h3><p>No. KickPulse shows live scores, fixtures, results, match events, statistics and lineups. It does not stream video. For a live broadcast, look for the official broadcaster or streaming service of the competition in your country.</p><h3>Is football the same as soccer?</h3><p>Yes. Football is the common name in most countries. Soccer is the name used mainly in the United States and Canada. KickPulse covers the same matches whichever word you search with.</p><h3>Who won the FIFA World Cup 2026?</h3><p>Spain won the 2026 FIFA World Cup, beating Argentina 1-0 after extra time in the final at MetLife Stadium in New Jersey on 19 July 2026. England finished third after a 6-4 win over France.</p>
 </section>
 <footer>
   <div class="wrap">
@@ -123,5 +144,6 @@
 
 <noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
 <script defer src="/assets/app.ccb1c7ed.min.js"></script>
+<script defer src="/assets/league-table.63fe6cb9.js"></script>
 </body>
 </html>

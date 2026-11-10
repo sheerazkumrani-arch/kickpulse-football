@@ -28,10 +28,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
 <link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<link rel="stylesheet" href="/assets/league-table.dc4fb3ad.css">
 <script src="/site-config.js"></script>
 <script defer src="/assets/boot.edab34b4.min.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KickPulse","item":"https://kickpulse-football.vercel.app/"},{"@type":"ListItem","position":2,"name":"Premier League live scores","item":"https://kickpulse-football.vercel.app/premier-league-live-scores/"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Premier League scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Premier League match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Can I follow my favourite Premier League club here?","acceptedAnswer":{"@type":"Answer","text":"Yes. Type the club name in the search box at the top. Any club with a match on the selected date appears in the list, and you can use the date bar to find its next game."}},{"@type":"Question","name":"Is KickPulse free to use for Premier League scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Premier League scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Premier League match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Can I follow my favourite Premier League club here?","acceptedAnswer":{"@type":"Answer","text":"Yes. Type the club name in the search box at the top. Any club with a match on the selected date appears in the list, and you can use the date bar to find its next game."}},{"@type":"Question","name":"Is KickPulse free to use for Premier League scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}},{"@type":"Question","name":"How many matches are there in a Premier League season?","acceptedAnswer":{"@type":"Answer","text":"Twenty clubs play each other home and away, so every club plays 38 matches and the league produces 380 matches in total."}},{"@type":"Question","name":"Where do I find today's Premier League match score?","acceptedAnswer":{"@type":"Answer","text":"Open this page and the matches for today appear in your time zone. Live games show the current minute and score, and finished games show the final result."}}]}</script>
 </head>
 <body data-league="eng.1">
 
@@ -53,7 +54,7 @@
       <span class="chip live"><b id="cLive">0</b> live now</span>
       <span class="chip"><b id="cMatches">0</b> matches</span>
       <span class="chip"><b id="cLeagues">0</b> leagues</span>
-      <span class="chip" id="cUpd">Loading...</span>
+      <span class="chip" id="cUpd">Loading...</span> <a class="chip" href="#league-table">League table</a>
     </div>
     <div class="pagesh" id="shareBar"></div>
   </section>
@@ -74,6 +75,7 @@
       <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
     </section>
   </div>
+<section class="lt" id="league-table" aria-label="Premier League overview and table"><h2 id="ltTitle">Premier League overview and live table</h2><div id="ltIntro"><p>The Premier League is the most-watched football league in the world, and this page is built for the moments when you just want the facts fast. Open it and you get Premier League live scores, the minute on the clock and the final result of every game, all in your own time zone.</p><p>Below the match list you will find the current league table. It updates by itself, so if you checked a live football score ten minutes ago and a goal has gone in since, the points and the positions move with it. It is also an easy way to see which football matches today could change the race for the title or the fight to stay up.</p></div><div class="lt-head" id="ltHead"><h3>Premier League table</h3><small id="ltUpd">Loading...</small></div><div id="ltTable"><div class="sk"></div></div></section>
 </main>
 
 <section class="wrap seo" aria-label="About Premier League">
@@ -82,8 +84,13 @@
   <p>A typical match week has games on Saturday and Sunday, with some on Friday or Monday. Kick-off times are shown in your device&#x27;s time zone, so an evening match in England appears at a later local hour in Pakistan. The Upcoming tab lists matches that have not started, and the Finished tab lists completed results. Arsenal, Chelsea, Liverpool, Manchester City, Manchester United and Tottenham are among the best-known clubs in the competition.</p>
   <h2 style="margin-top:22px">How to use this page</h2>
   <ol><li>Pick a date in the bar at the top. Today is selected by default, and this page moves ahead to the next match day when the competition has no games today.</li><li>Use the All, Live, Finished and Upcoming tabs to narrow the list.</li><li>Tap a match to open its timeline, statistics, lineups and match information.</li><li>Search for a club or a competition in the search box.</li><li>Share a match with friends using the share buttons.</li></ol>
+  <h2 style="margin-top:22px">Following the Premier League day by day</h2>
+  <p>If you only have a minute, the Live tab on this page is the quickest way to check the football match today and see which Premier League games are in progress. It lists every game that is being played, with the minute and the score, and it refreshes by itself. When no game is live, the Upcoming tab shows what is next, and the Finished tab gives the full-time scores from earlier in the day.</p>
+  <p>The league is a 38-game marathon for each club, which means a typical season produces 380 matches. That is why there is almost always something to follow: a Saturday afternoon slate, a Sunday big game, a Monday night fixture and midweek rounds squeezed in around cup football. Whether you support one of the so-called big clubs or a team fighting to stay up, the live score page works the same way. Search for the club and the match jumps to the top of the list.</p>
+  <p>The top of the table is the story most people watch, but the bottom three clubs go down to the Championship at the end of the season, and those relegation battles often produce the most dramatic Saturday afternoons. Keeping an eye on every live score at once is the easiest way to feel the tension.</p>
   <h2 style="margin-top:22px">Frequently asked questions</h2>
   <h3>How often do Premier League scores update?</h3><p>While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top.</p><h3>What can I see for each Premier League match?</h3><p>Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match.</p><h3>Can I follow my favourite Premier League club here?</h3><p>Yes. Type the club name in the search box at the top. Any club with a match on the selected date appears in the list, and you can use the date bar to find its next game.</p><h3>Is KickPulse free to use for Premier League scores?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times.</p>
+  <h3>How many matches are there in a Premier League season?</h3><p>Twenty clubs play each other home and away, so every club plays 38 matches and the league produces 380 matches in total.</p><h3>Where do I find today&#x27;s Premier League match score?</h3><p>Open this page and the matches for today appear in your time zone. Live games show the current minute and score, and finished games show the final result.</p>
   <h2 style="margin-top:26px">More live scores</h2>
   <div class="links">
       <a href="/">All leagues</a>
@@ -98,6 +105,10 @@
       <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
       <a href="/mls-live-scores/">MLS</a>
       <a href="/fa-cup-live-scores/">FA Cup</a>
+      <a href="/world-cup-2026-live-scores/">World Cup 2026</a>
+      <a href="/football-matches-today/">Football matches today</a>
+      <a href="/soccer-live-scores/">Soccer live scores</a>
+      <a href="/real-madrid-live-score/">Real Madrid</a>
   </div>
 </section>
 <footer>
@@ -118,5 +129,6 @@
 
 <noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
 <script defer src="/assets/app.ccb1c7ed.min.js"></script>
+<script defer src="/assets/league-table.63fe6cb9.js"></script>
 </body>
 </html>

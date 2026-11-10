@@ -28,10 +28,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
 <link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<link rel="stylesheet" href="/assets/league-table.dc4fb3ad.css">
 <script src="/site-config.js"></script>
 <script defer src="/assets/boot.edab34b4.min.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KickPulse","item":"https://kickpulse-football.vercel.app/"},{"@type":"ListItem","position":2,"name":"Champions League live scores","item":"https://kickpulse-football.vercel.app/champions-league-live-scores/"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Champions League scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Champions League match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"What time are Champions League matches in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Kick-off times on this page are converted to your device's time zone automatically, so you always see your local time."}},{"@type":"Question","name":"Is KickPulse free to use for Champions League scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Champions League scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Champions League match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"What time are Champions League matches in Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Kick-off times on this page are converted to your device's time zone automatically, so you always see your local time."}},{"@type":"Question","name":"Is KickPulse free to use for Champions League scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}},{"@type":"Question","name":"How does the Champions League league phase work?","acceptedAnswer":{"@type":"Answer","text":"Thirty-six clubs play eight matches each against different opponents. The top clubs go straight into the round of 16, and others play an extra knockout round to get there."}},{"@type":"Question","name":"Which club has won the Champions League the most times?","acceptedAnswer":{"@type":"Answer","text":"Real Madrid have won the European Cup and Champions League more times than any other club."}}]}</script>
 </head>
 <body data-league="uefa.champions">
 
@@ -53,7 +54,7 @@
       <span class="chip live"><b id="cLive">0</b> live now</span>
       <span class="chip"><b id="cMatches">0</b> matches</span>
       <span class="chip"><b id="cLeagues">0</b> leagues</span>
-      <span class="chip" id="cUpd">Loading...</span>
+      <span class="chip" id="cUpd">Loading...</span> <a class="chip" href="#league-table">League table</a>
     </div>
     <div class="pagesh" id="shareBar"></div>
   </section>
@@ -74,6 +75,7 @@
       <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
     </section>
   </div>
+<section class="lt" id="league-table" aria-label="Champions League overview and table"><h2 id="ltTitle">Champions League overview and live table</h2><div id="ltIntro"><p>The UEFA Champions League is the biggest club competition in Europe, and the big European nights are the ones people search for most. This page shows Champions League live scores, results and fixtures, with goals, cards and lineups for every match.</p><p>The league phase table is shown below the matches and updates as the games finish. It helps you see which clubs are safe, which are fighting for a place in the knockout rounds, and how the football matches today affect the standings.</p></div><div class="lt-head" id="ltHead"><h3>Champions League table</h3><small id="ltUpd">Loading...</small></div><div id="ltTable"><div class="sk"></div></div></section>
 </main>
 
 <section class="wrap seo" aria-label="About Champions League">
@@ -82,8 +84,13 @@
   <p>The competition starts with a league phase, continues with knockout rounds that are mostly played over two legs, and ends with a single final. Because the match days change through the season, it helps to check the date bar for upcoming fixtures. When the data provider supplies a note such as the round or the leg, it is shown under the team names.</p>
   <h2 style="margin-top:22px">How to use this page</h2>
   <ol><li>Pick a date in the bar at the top. Today is selected by default, and this page moves ahead to the next match day when the competition has no games today.</li><li>Use the All, Live, Finished and Upcoming tabs to narrow the list.</li><li>Tap a match to open its timeline, statistics, lineups and match information.</li><li>Search for a club or a competition in the search box.</li><li>Share a match with friends using the share buttons.</li></ol>
+  <h2 style="margin-top:22px">How the Champions League works, in plain words</h2>
+  <p>The UEFA Champions League is the biggest club competition in Europe. Since the 2024-25 season it has used a league phase of 36 teams, where each club plays eight matches against different opponents instead of the old four-team groups. The best teams go straight to the round of 16, others fight through a play-off round, and from there it is knockout football all the way to the final in late May or early June.</p>
+  <p>Matches are usually played on Tuesday and Wednesday nights, with games kicking off at different times so you can follow more than one. The Live tab on this page lists every game being played right now, and the scores refresh about every 30 seconds. After the full-time whistle the result stays in the Finished tab, so you can come back later and still see how the night ended.</p>
+  <p>Real Madrid have won the competition more times than any other club, and the stories of comebacks, late goals and big upsets are a large part of why people check live scores here so often. Tap any match to see goals, cards, substitutions, shots, possession and lineups.</p>
   <h2 style="margin-top:22px">Frequently asked questions</h2>
   <h3>How often do Champions League scores update?</h3><p>While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top.</p><h3>What can I see for each Champions League match?</h3><p>Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match.</p><h3>What time are Champions League matches in Pakistan?</h3><p>Kick-off times on this page are converted to your device&#x27;s time zone automatically, so you always see your local time.</p><h3>Is KickPulse free to use for Champions League scores?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times.</p>
+  <h3>How does the Champions League league phase work?</h3><p>Thirty-six clubs play eight matches each against different opponents. The top clubs go straight into the round of 16, and others play an extra knockout round to get there.</p><h3>Which club has won the Champions League the most times?</h3><p>Real Madrid have won the European Cup and Champions League more times than any other club.</p>
   <h2 style="margin-top:26px">More live scores</h2>
   <div class="links">
       <a href="/">All leagues</a>
@@ -98,6 +105,10 @@
       <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
       <a href="/mls-live-scores/">MLS</a>
       <a href="/fa-cup-live-scores/">FA Cup</a>
+      <a href="/world-cup-2026-live-scores/">World Cup 2026</a>
+      <a href="/football-matches-today/">Football matches today</a>
+      <a href="/soccer-live-scores/">Soccer live scores</a>
+      <a href="/real-madrid-live-score/">Real Madrid</a>
   </div>
 </section>
 <footer>
@@ -118,5 +129,6 @@
 
 <noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
 <script defer src="/assets/app.ccb1c7ed.min.js"></script>
+<script defer src="/assets/league-table.63fe6cb9.js"></script>
 </body>
 </html>

@@ -22,3 +22,7 @@
 - [Saudi Pro League live scores](https://kickpulse-football.vercel.app/saudi-pro-league-live-scores/): Live Saudi Pro League scores, results and fixtures with match details.
 - [MLS live scores](https://kickpulse-football.vercel.app/mls-live-scores/): Live Major League Soccer scores, results and fixtures with match details.
 - [FA Cup live scores](https://kickpulse-football.vercel.app/fa-cup-live-scores/): Live English FA Cup scores, results and fixtures with match details.
+- [FIFA World Cup 2026 live score and results](https://kickpulse-football.vercel.app/world-cup-2026-live-scores/): Results, final and match details from the 2026 World Cup, won by Spain.
+- [Football matches today](https://kickpulse-football.vercel.app/football-matches-today/): All football matches today with live scores and kick-off times in your time zone.
+- [Soccer live scores](https://kickpulse-football.vercel.app/soccer-live-scores/): Live soccer scores, MLS and international results.
+- [Real Madrid live score](https://kickpulse-football.vercel.app/real-madrid-live-score/): Real Madrid live score, fixtures and results.
