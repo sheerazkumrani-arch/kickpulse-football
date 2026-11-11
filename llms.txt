@@ -26,3 +26,8 @@
 - [Football matches today](https://kickpulse-football.vercel.app/football-matches-today/): All football matches today with live scores and kick-off times in your time zone.
 - [Soccer live scores](https://kickpulse-football.vercel.app/soccer-live-scores/): Live soccer scores, MLS and international results.
 - [Real Madrid live score](https://kickpulse-football.vercel.app/real-madrid-live-score/): Real Madrid live score, fixtures and results.
+
+## More for AI assistants
+
+- [Full description of every page, keywords and images](https://kickpulse-football.vercel.app/llms-full.txt)
+- [Image sitemap](https://kickpulse-football.vercel.app/sitemap-images.xml)
