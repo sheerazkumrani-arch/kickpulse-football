@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLS Scores Today | Live Scores, Matches &amp; Results | KickPulse</title>
+<meta name="description" content="MLS scores today, live scores, matches tonight and results. Follow every Major League Soccer game with goals, cards, stats and the MLS table.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://kickpulse-football.vercel.app/mls-live-scores/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KickPulse">
+<meta property="og:title" content="MLS Scores Today | Live Scores, Matches &amp; Results | KickPulse">
+<meta property="og:description" content="MLS scores today, live scores, matches tonight and results. Follow every Major League Soccer game with goals, cards, stats and the MLS table.">
+<meta property="og:url" content="https://kickpulse-football.vercel.app/mls-live-scores/">
+<meta property="og:image" content="https://kickpulse-football.vercel.app/assets/og-mls.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MLS Scores Today | Live Scores, Matches &amp; Results | KickPulse">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MLS Scores Today | Live Scores, Matches &amp; Results | KickPulse">
+<meta name="twitter:description" content="MLS scores today, live scores, matches tonight and results. Follow every Major League Soccer game with goals, cards, stats and the MLS table.">
+<meta name="twitter:image" content="https://kickpulse-football.vercel.app/assets/og-mls.jpg">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css"><link rel="stylesheet" href="/assets/kp-polish.b2364a22.css"><link rel="stylesheet" href="/assets/kp-leagues.css">
+<link rel="stylesheet" href="/assets/league-table.dc4fb3ad.css">
+<script src="/site-config.js"></script>
+<script defer src="/assets/boot.edab34b4.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KickPulse","item":"https://kickpulse-football.vercel.app/"},{"@type":"ListItem","position":2,"name":"MLS live scores","item":"https://kickpulse-football.vercel.app/mls-live-scores/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do MLS scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each MLS match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Why do MLS matches show late-night times?","acceptedAnswer":{"@type":"Answer","text":"North America is many hours behind Pakistan, so evening kick-offs there appear at night or in the early morning in your local time."}},{"@type":"Question","name":"Is KickPulse free to use for MLS scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}},{"@type":"Question","name":"When does the MLS season start and end?","acceptedAnswer":{"@type":"Answer","text":"The MLS regular season usually starts in February or March and ends in October, followed by the playoffs and the MLS Cup final."}},{"@type":"Question","name":"Does Lionel Messi play in MLS?","acceptedAnswer":{"@type":"Answer","text":"Lionel Messi joined Inter Miami in 2023. To see whether his club has a match today, search for Inter Miami in the box at the top of the page."}},{"@type":"Question","name":"What MLS matches are on today?","acceptedAnswer":{"@type":"Answer","text":"Open the All tab on this page. It lists every MLS match for the selected date, with the kick-off time in your own time zone. Use Upcoming for games still to come and Finished for MLS results today."}},{"@type":"Question","name":"Are there any MLS games tonight?","acceptedAnswer":{"@type":"Answer","text":"Check the Upcoming and Live tabs. If there are no games on the selected date, use the date bar to jump to the next MLS match day."}},{"@type":"Question","name":"Where can I watch MLS on TV?","acceptedAnswer":{"@type":"Answer","text":"KickPulse does not stream video. MLS on TV depends on your country, so check the official broadcaster or the league website."}}]}</script>
+</head>
+<body style="--lg:#0f172a" data-league="usa.1">
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="logo" href="/" aria-label="KickPulse home"><span class="mark">K</span><span>Kick<b>Pulse</b></span></a>
+    <label class="search"><input id="q" type="search" placeholder="Search team or league" autocomplete="off" aria-label="Search team or league"></label>
+    <span class="pill" id="livePill"><span class="dot"></span><span><b id="livePillN">0</b> <span class="lbl">live now</span></span></span>
+    <button class="icon" id="refresh" aria-label="Refresh scores" title="Refresh"><span>&#8635;</span></button>
+  </div>
+</header>
+<nav class="lgnav" aria-label="Football leagues"><div class="wrap lgnav-in"><a class="lgb all" style="--c:#059669" href="/"><i>ALL</i><span>All leagues</span></a><a class="lgb" style="--c:#6d28d9" href="/premier-league-live-scores/"><i>EPL</i><span>Premier League</span></a><a class="lgb" style="--c:#dc2626" href="/la-liga-live-scores/"><i>LL</i><span>La Liga</span></a><a class="lgb" style="--c:#0284c7" href="/serie-a-live-scores/"><i>SA</i><span>Serie A</span></a><a class="lgb" style="--c:#b91c1c" href="/bundesliga-live-scores/"><i>BL</i><span>Bundesliga</span></a><a class="lgb" style="--c:#0891b2" href="/ligue-1-live-scores/"><i>L1</i><span>Ligue 1</span></a><a class="lgb" style="--c:#1d4ed8" href="/champions-league-live-scores/"><i>UCL</i><span>Champions League</span></a><a class="lgb" style="--c:#ea580c" href="/europa-league-live-scores/"><i>UEL</i><span>Europa League</span></a><a class="lgb" style="--c:#16a34a" href="/conference-league-live-scores/"><i>UECL</i><span>Conference League</span></a><a class="lgb" style="--c:#7c3aed" href="/nations-league-live-scores/"><i>UNL</i><span>Nations League</span></a><a class="lgb on" style="--c:#0f172a" href="/mls-live-scores/" aria-current="page"><i>MLS</i><span>MLS</span></a><a class="lgb" style="--c:#15803d" href="/saudi-pro-league-live-scores/"><i>SPL</i><span>Saudi Pro League</span></a><a class="lgb" style="--c:#be123c" href="/fa-cup-live-scores/"><i>FAC</i><span>FA Cup</span></a></div></nav>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>MLS scores <span>today</span></h1>
+    <p>MLS matches today with live scores, games tonight, results and the league table.</p>
+    <div class="crumbs"><a href="/">KickPulse</a> &rsaquo; MLS live scores</div>
+    <div class="chips">
+      <span class="chip live"><b id="cLive">0</b> live now</span>
+      <span class="chip"><b id="cMatches">0</b> matches</span>
+      <span class="chip"><b id="cLeagues">0</b> leagues</span>
+      <span class="chip" id="cUpd">Live scores</span> <a class="chip" href="#league-table">League table</a>
+    </div>
+    <div class="pagesh" id="shareBar"></div>
+  </section>
+
+  <section class="controls">
+    <div class="dates" id="dates"></div>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-s="all">All <i id="tAll">0</i></button>
+      <button class="tab" data-s="live">Live <i id="tLive">0</i></button>
+      <button class="tab" data-s="fin">Finished <i id="tFin">0</i></button>
+      <button class="tab" data-s="pre">Upcoming <i id="tPre">0</i></button>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="side" id="side" aria-label="Leagues"></nav>
+    <section id="list" aria-live="polite">
+      <!--KP:MATCHES--><div class="sk"></div><div class="sk"></div><!--/KP:MATCHES-->
+    </section>
+  </div>
+<section class="lt" id="league-table" aria-label="MLS overview and table"><h2 id="ltTitle">MLS overview and live table</h2><div id="ltIntro"><p>Major League Soccer covers clubs from the United States and Canada, so games are played across several time zones. This page shows MLS live scores, results and fixtures with the kick-off time already converted for your location.</p><p>Because the league is split into an Eastern and a Western Conference, the live MLS table below is shown for each conference. It refreshes by itself, which makes it easy to follow soccer today and see how the playoff race is shaping up.</p></div><div class="lt-head" id="ltHead"><h3>MLS table</h3><small id="ltUpd">Updated automatically</small></div><div id="ltTable"><!--KP:TABLE--><div class="sk"></div><!--/KP:TABLE--></div></section>
+</main>
+
+<section class="wrap seo" aria-label="About MLS">
+<div class="kp-more"><h2>MLS matches today: scores, games tonight and results</h2>
+<p>Looking for MLS matches today? This page lists every Major League Soccer game for the selected day, with live MLS scores, MLS results today and the MLS matchups still to come. Major League Soccer is the top league in the United States and Canada. About 30 clubs are split into the Eastern and Western Conferences. The league has about 30 clubs and a regular season that ends in autumn, followed by the MLS Cup playoffs.</p>
+<h3>MLS games tonight and MLS today</h3><p>Open the Upcoming tab to see MLS games tonight, or the Live tab for matches in progress. Most kick-offs are in the North American evening, so the date bar is the quickest way to find the next MLS match day.</p>
+<h3>MLS results today and highlights</h3><p>Use the Finished tab for MLS results today and last night's final scores. KickPulse does not host video, so for MLS highlights and full replays please use the league's official channels.</p>
+<h3>MLS schedule, playoffs and the MLS Cup</h3><p>The MLS schedule runs from February to the regular-season finale, then the MLS Cup playoffs decide the champion. During the playoffs, the list shows MLS playoffs matches today as soon as they are available. Popular clubs to follow: Inter Miami, LA Galaxy, LAFC, Seattle Sounders, New York City FC and Atlanta United.</p>
+<h3>Where to watch MLS on TV</h3><p>We show scores, not video. For MLS on TV or a live stream, check the official broadcaster in your country; broadcast names appear on a match when the data feed provides them.</p>
+<h3>MLS kick-off times in the UK, Europe and Pakistan</h3><p>Every time on this page is converted to your own time zone. In winter (standard time) the UK is on UTC, Central Europe on UTC+1, Pakistan on UTC+5 and the US East Coast on UTC-5, so an 8 pm Eastern kick-off is 1 am UTC and 6 am in Pakistan.</p></div>
+  <h2>About Major League Soccer live scores</h2>
+  <p>Major League Soccer is the top professional league in the United States and Canada. Matches are usually played in North American evenings, which means night or early morning in Pakistan. Check the date bar for tomorrow&#x27;s fixtures and yesterday&#x27;s results.</p>
+  <p>The season has a regular schedule followed by playoffs, so the match list changes through the year. Use the Finished tab in the morning to catch up on results from the night before, and the Upcoming tab to see which games are coming next. Inter Miami, LA Galaxy, LAFC, Seattle Sounders and New York City FC are among the clubs you can follow.</p>
+  <h2 style="margin-top:22px">How to use this page</h2>
+  <ol><li>Pick a date in the bar at the top. Today is selected by default, and this page moves ahead to the next match day when the competition has no games today.</li><li>Use the All, Live, Finished and Upcoming tabs to narrow the list.</li><li>Tap a match to open its timeline, statistics, lineups and match information.</li><li>Search for a club or a competition in the search box.</li><li>Share a match with friends using the share buttons.</li></ol>
+  <h2 style="margin-top:22px">MLS and soccer in North America</h2>
+  <p>Major League Soccer is the top professional soccer league in the United States and Canada. Clubs are divided into the Eastern and Western Conferences, and the season runs from February to the autumn, followed by the MLS Cup playoffs. The league has grown quickly, and the arrival of Lionel Messi at Inter Miami in 2023 brought a new wave of fans. LA Galaxy, Seattle Sounders, LAFC and Atlanta United are some of the clubs with big followings.</p>
+  <p>Because the matches are played across several North American time zones, kick-off times can look odd from elsewhere in the world. That is where the automatic time zone conversion on this page helps. In the United States and Canada the sport is called soccer, and the same games are called football in most other countries; if you searched for live soccer scores or soccer today, you are on the right page.</p>
+  <p>Tap any match to see the timeline of goals and cards, team statistics and lineups. For a wider look at the game under its American name, read our <a href="/soccer-live-scores/">soccer live scores</a> page.</p>
+  <h2 style="margin-top:22px">Frequently asked questions</h2><h3>What MLS matches are on today?</h3><p>Open the All tab on this page. It lists every MLS match for the selected date, with the kick-off time in your own time zone. Use Upcoming for games still to come and Finished for MLS results today.</p><h3>Are there any MLS games tonight?</h3><p>Check the Upcoming and Live tabs. If there are no games on the selected date, use the date bar to jump to the next MLS match day.</p><h3>Where can I watch MLS on TV?</h3><p>KickPulse does not stream video. MLS on TV depends on your country, so check the official broadcaster or the league website.</p>
+  <h3>How often do MLS scores update?</h3><p>While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top.</p><h3>What can I see for each MLS match?</h3><p>Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match.</p><h3>Why do MLS matches show late-night times?</h3><p>North America is many hours behind Pakistan, so evening kick-offs there appear at night or in the early morning in your local time.</p><h3>Is KickPulse free to use for MLS scores?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times.</p>
+  <h3>When does the MLS season start and end?</h3><p>The MLS regular season usually starts in February or March and ends in October, followed by the playoffs and the MLS Cup final.</p><h3>Does Lionel Messi play in MLS?</h3><p>Lionel Messi joined Inter Miami in 2023. To see whether his club has a match today, search for Inter Miami in the box at the top of the page.</p>
+  <h2 style="margin-top:26px">More live scores</h2>
+  <div class="links">
+      <a href="/">All leagues</a>
+      <a href="/champions-league-live-scores/">Champions League</a>
+      <a href="/europa-league-live-scores/">Europa League</a>
+      <a href="/conference-league-live-scores/">Conference League</a>
+      <a href="/nations-league-live-scores/">Nations League</a>
+      <a href="/premier-league-live-scores/">Premier League</a>
+      <a href="/la-liga-live-scores/">La Liga</a>
+      <a href="/serie-a-live-scores/">Serie A</a>
+      <a href="/bundesliga-live-scores/">Bundesliga</a>
+      <a href="/ligue-1-live-scores/">Ligue 1</a>
+      <a href="/saudi-pro-league-live-scores/">Saudi Pro League</a>
+      <a href="/fa-cup-live-scores/">FA Cup</a>
+      <a href="/world-cup-2026-live-scores/">World Cup 2026</a>
+      <a href="/football-matches-today/">Football matches today</a>
+      <a href="/soccer-live-scores/">Soccer live scores</a>
+      <a href="/real-madrid-live-score/">Real Madrid</a>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <nav class="fnav" aria-label="Footer"><a href="/">Home</a><a href="/about/">About</a><a href="/privacy-policy/">Privacy policy</a></nav>
+    <div id="socialLinks" class="links"></div>
+    <p>KickPulse shows live football scores, fixtures, results, match events, statistics and lineups. Times are shown in your own time zone (<span id="tz"></span>).</p>
+    <p>Scores come from ESPN's public data feed and can be a little delayed or occasionally unavailable. KickPulse is not affiliated with ESPN or any league or club. We use privacy-friendly analytics to count visits.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Match details">
+    <button class="x" id="mx" aria-label="Close">&times;</button>
+    <div id="mbody"></div>
+  </div>
+</div>
+
+<noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
+<script defer src="/assets/app.e2b39741.v2.min.js"></script>
+<script defer src="/assets/league-table.b5e8a2e2.v2.js"></script>
+</body>
+</html>

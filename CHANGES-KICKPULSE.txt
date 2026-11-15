@@ -1,0 +1,8 @@
+KickPulse update (Nov 2026)
+- League buttons moved to the top of every page (coloured, one per league); league pages use one column with a coloured hero.
+- Pages now live in _pages/ and are served through api/page.js, which puts today's matches and the league table into the HTML. If ESPN is slow, the normal page is sent. URLs are unchanged.
+- MLS page: new title, H1, description, headings for matches today / games tonight / results / schedule / playoffs / TV / time zones, extra FAQs.
+- Every league page: a unique intro, results, where-to-watch and FAQ block (also added to FAQ schema).
+- Pages now use the v2 scripts (via /api) and the polish css that were in the zip but not linked.
+- No betting keywords were added.
+- Deploy on Vercel only (Cloudflare Pages cannot run api/page.js). Then in Search Console: Inspect URL > Request indexing for each league page.
