@@ -28,10 +28,15 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
   fs.mkdirSync(OUT, { recursive: true });
   for (const n of fs.readdirSync(R)) { if (SKIP.has(n) || /\.zip$|^README-DEPLOY\.txt$|^CHANGES-KICKPULSE\.txt$/.test(n)) continue; fs.cpSync(path.join(R, n), path.join(OUT, n), { recursive: true }); }
   const pages = [path.join(OUT, "index.html")].concat(fs.readdirSync(OUT).map((d) => path.join(OUT, d, "index.html")));
-  let ok = 0;
+  let ok = 0, blogHtml = "";
+  try { // latest Pitchside Notes articles, written into the HTML so Google sees them
+    const bl = await getJson("https://kickpulse-final.vercel.app/articles.json", 6000), arr = (bl.data && bl.data.articles) || [];
+    blogHtml = arr.slice(0, 3).map((x) => "<li><a href=\"" + esc(x.url) + "\">" + esc(x.title) + "</a><span>" + esc(x.description) + "</span><small>" + esc(String(x.date).slice(5)) + "</small></li>").join("");
+  } catch (e) { blogHtml = ""; }
   await Promise.all(pages.filter((f) => fs.existsSync(f)).map(async (f) => {
     try {
       let html = fs.readFileSync(f, "utf8");
+      if (blogHtml && html.includes("<!--KP:BLOG-->")) { html = swap(html, "BLOG", blogHtml); fs.writeFileSync(f, html); ok++; }
       const m = html.match(/<body[^>]*data-league="([a-z0-9._-]+)"/);
       if (!m) return;
       const b = "https://site.api.espn.com/apis/";

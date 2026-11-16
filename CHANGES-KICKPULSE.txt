@@ -1,19 +1,5 @@
-KickPulse update 2 (Nov 2026)
-IMPORTANT BEFORE UPLOADING TO GITHUB
-- If your repo has a folder called _pages and a file api/page.js (from my earlier zip), DELETE them on GitHub (open the folder > "..." menu > Delete directory). Then upload everything from this zip over the repo (same paths, so files are replaced).
-- Vercel project settings are read from vercel.json (build command: node scripts/prerender.js, output: dist). Do not change them.
-- Deploy to the kickpulse-football project only.
-
-WHAT CHANGED
-- Coloured league buttons at the top of every page; league pages are one column with a coloured hero.
-- Build step (scripts/prerender.js) puts today's matches and the league table into each league page's HTML, so Google no longer sees "Loading... / 0 matches". It runs on every deploy.
-- MLS page: new title/H1/description, matches today / games tonight / results / schedule / playoffs / TV / time-zone sections, more FAQs.
-- Every league page: its own intro, results, where-to-watch and FAQ text.
-- New pages: /mls-schedule/, /mls-on-tv/, /mls-playoffs/, /inter-miami-live-score/ (linked from the MLS page, from each other, and added to sitemap.xml).
-- Blog link to Pitchside Notes (kickpulse-final.vercel.app) in the footer of every page, on the home page and on all MLS pages.
-- v2 scripts and polish css are now linked.
-- No betting keywords.
-AFTER DEPLOY
-- View source of /mls-live-scores/ and search for "LA Galaxy" or any team: matches should be in the HTML.
-- Search Console: submit sitemap.xml again, then Inspect URL > Request indexing for the new pages and the league pages.
-- The match list is refreshed at each deploy and live in the browser after that.
+KickPulse update 4 (Nov 2026)
+- Pitchside Notes: pulsing announcement bar on every page, and a 'NEW ON PITCHSIDE NOTES' box on home and all MLS pages.
+- The box shows the 3 newest blog articles. They come from kickpulse-final.vercel.app/articles.json (deploy the blog zip v4 FIRST).
+- At each deploy the latest articles are also written into the HTML; in the browser they refresh live.
+- Earlier: MLS sub-pages are full live pages; all 13 league buttons visible with icons.
