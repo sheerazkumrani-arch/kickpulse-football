@@ -11,3 +11,4 @@ body[data-league] .side{display:none}
 body[data-league] .hero{margin-top:14px;padding:22px 20px 18px;border-radius:20px;border:1px solid var(--line);border-left:6px solid var(--lg,#059669);background:linear-gradient(135deg,color-mix(in srgb,var(--lg,#059669) 9%,#fff),#fff 70%)}
 body[data-league] .tab.on i{background:var(--lg,#059669);color:#fff}
 body[data-league] .lt-g,body[data-league] .lt h2{color:var(--lg,#047857)}
+.kpl .kpr{display:grid;grid-template-columns:130px 1fr 54px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:center}.kpl .kpr i{font-style:normal;text-align:center;font-weight:800}.kpl .kpr span{color:#64748b;font-size:12px}.kphub{font-size:13px;color:#64748b}.kphub a{margin-right:4px}@media(max-width:560px){.kpl .kpr{grid-template-columns:1fr 1fr}.kpl .kpr span{grid-column:1/3}}

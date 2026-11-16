@@ -27,14 +27,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
-<link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css">
+<link rel="stylesheet" href="/assets/kickpulse.846a68f1.min.css"><link rel="stylesheet" href="/assets/kp-polish.b2364a22.css"><link rel="stylesheet" href="/assets/kp-leagues.css">
 <link rel="stylesheet" href="/assets/league-table.dc4fb3ad.css">
 <script src="/site-config.js"></script>
 <script defer src="/assets/boot.edab34b4.min.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KickPulse","item":"https://kickpulse-football.vercel.app/"},{"@type":"ListItem","position":2,"name":"Conference League live scores","item":"https://kickpulse-football.vercel.app/conference-league-live-scores/"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Conference League scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Conference League match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Where can I see Conference League results?","acceptedAnswer":{"@type":"Answer","text":"Choose Yesterday or any earlier date in the date bar to see finished matches with their final scores."}},{"@type":"Question","name":"Is KickPulse free to use for Conference League scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}},{"@type":"Question","name":"When did the Conference League start?","acceptedAnswer":{"@type":"Answer","text":"The UEFA Conference League started in the 2021-22 season, and Roma were the first winners."}},{"@type":"Question","name":"Is the Conference League played on the same day as the Europa League?","acceptedAnswer":{"@type":"Answer","text":"Yes, both competitions usually play on Thursday evenings, so this page and the Europa League page are often busy on the same night."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How often do Conference League scores update?","acceptedAnswer":{"@type":"Answer","text":"While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top."}},{"@type":"Question","name":"What can I see for each Conference League match?","acceptedAnswer":{"@type":"Answer","text":"Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match."}},{"@type":"Question","name":"Where can I see Conference League results?","acceptedAnswer":{"@type":"Answer","text":"Choose Yesterday or any earlier date in the date bar to see finished matches with their final scores."}},{"@type":"Question","name":"Is KickPulse free to use for Conference League scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times."}},{"@type":"Question","name":"When did the Conference League start?","acceptedAnswer":{"@type":"Answer","text":"The UEFA Conference League started in the 2021-22 season, and Roma were the first winners."}},{"@type":"Question","name":"Is the Conference League played on the same day as the Europa League?","acceptedAnswer":{"@type":"Answer","text":"Yes, both competitions usually play on Thursday evenings, so this page and the Europa League page are often busy on the same night."}},{"@type":"Question","name":"What Conference League matches are on today?","acceptedAnswer":{"@type":"Answer","text":"Open the All tab to see every Conference League match for the selected date, with kick-off times in your own time zone."}},{"@type":"Question","name":"Where can I watch Conference League?","acceptedAnswer":{"@type":"Answer","text":"KickPulse shows scores, not video. Check the official TV or streaming partner of the competition in your country."}}]}</script>
 </head>
-<body data-league="uefa.europa.conf">
+<body style="--lg:#16a34a" data-league="uefa.europa.conf">
 
 <header class="top">
   <div class="wrap bar">
@@ -44,6 +44,7 @@
     <button class="icon" id="refresh" aria-label="Refresh scores" title="Refresh"><span>&#8635;</span></button>
   </div>
 </header>
+<nav class="lgnav" aria-label="Football leagues"><div class="wrap lgnav-in"><a class="lgb all" style="--c:#059669" href="/"><i>ALL</i><span>All leagues</span></a><a class="lgb" style="--c:#6d28d9" href="/premier-league-live-scores/"><i>EPL</i><span>Premier League</span></a><a class="lgb" style="--c:#dc2626" href="/la-liga-live-scores/"><i>LL</i><span>La Liga</span></a><a class="lgb" style="--c:#0284c7" href="/serie-a-live-scores/"><i>SA</i><span>Serie A</span></a><a class="lgb" style="--c:#b91c1c" href="/bundesliga-live-scores/"><i>BL</i><span>Bundesliga</span></a><a class="lgb" style="--c:#0891b2" href="/ligue-1-live-scores/"><i>L1</i><span>Ligue 1</span></a><a class="lgb" style="--c:#1d4ed8" href="/champions-league-live-scores/"><i>UCL</i><span>Champions League</span></a><a class="lgb" style="--c:#ea580c" href="/europa-league-live-scores/"><i>UEL</i><span>Europa League</span></a><a class="lgb on" style="--c:#16a34a" href="/conference-league-live-scores/" aria-current="page"><i>UECL</i><span>Conference League</span></a><a class="lgb" style="--c:#7c3aed" href="/nations-league-live-scores/"><i>UNL</i><span>Nations League</span></a><a class="lgb" style="--c:#0f172a" href="/mls-live-scores/"><i>MLS</i><span>MLS</span></a><a class="lgb" style="--c:#15803d" href="/saudi-pro-league-live-scores/"><i>SPL</i><span>Saudi Pro League</span></a><a class="lgb" style="--c:#be123c" href="/fa-cup-live-scores/"><i>FAC</i><span>FA Cup</span></a></div></nav>
 
 <main class="wrap">
   <section class="hero">
@@ -54,7 +55,7 @@
       <span class="chip live"><b id="cLive">0</b> live now</span>
       <span class="chip"><b id="cMatches">0</b> matches</span>
       <span class="chip"><b id="cLeagues">0</b> leagues</span>
-      <span class="chip" id="cUpd">Loading...</span> <a class="chip" href="#league-table">League table</a>
+      <span class="chip" id="cUpd">Live scores</span> <a class="chip" href="#league-table">League table</a>
     </div>
     <div class="pagesh" id="shareBar"></div>
   </section>
@@ -72,13 +73,17 @@
   <div class="layout">
     <nav class="side" id="side" aria-label="Leagues"></nav>
     <section id="list" aria-live="polite">
-      <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
+      <!--KP:MATCHES--><div class="sk"></div><div class="sk"></div><!--/KP:MATCHES-->
     </section>
   </div>
-<section class="lt" id="league-table" aria-label="Conference League overview and table"><h2 id="ltTitle">Conference League overview and live table</h2><div id="ltIntro"><p>The UEFA Conference League gives clubs from smaller leagues a European stage. This page shows Conference League live scores, results and fixtures, and it is a good place to find football matches today that are not always in the spotlight.</p><p>Below the matches you will find the current league phase table. It refreshes by itself, so the standings keep up with the results while the games are being played.</p></div><div class="lt-head" id="ltHead"><h3>Conference League table</h3><small id="ltUpd">Loading...</small></div><div id="ltTable"><div class="sk"></div></div></section>
+<section class="lt" id="league-table" aria-label="Conference League overview and table"><h2 id="ltTitle">Conference League overview and live table</h2><div id="ltIntro"><p>The UEFA Conference League gives clubs from smaller leagues a European stage. This page shows Conference League live scores, results and fixtures, and it is a good place to find football matches today that are not always in the spotlight.</p><p>Below the matches you will find the current league phase table. It refreshes by itself, so the standings keep up with the results while the games are being played.</p></div><div class="lt-head" id="ltHead"><h3>Conference League table</h3><small id="ltUpd">Updated automatically</small></div><div id="ltTable"><!--KP:TABLE--><div class="sk"></div><!--/KP:TABLE--></div></section>
 </main>
 
 <section class="wrap seo" aria-label="About Conference League">
+<div class="kp-more"><h2>Conference League matches today: live scores, results and fixtures</h2>
+<p>The UEFA Conference League is the third UEFA club competition. It also has a 36-team league phase before the knockout rounds, and gives clubs from smaller leagues a European stage. Follow Conference League matches today, live Conference League scores and Conference League results on this page, with each kick-off shown in your own time zone.</p>
+<h3>Conference League results and the league table</h3><p>The Finished tab shows Conference League results from earlier today, and the date bar lets you open yesterday or the days ahead. The table below the match list shows how clubs stand after each match. Well-known names include clubs from the Netherlands, Poland, Greece, Belgium, Czechia and many more leagues.</p>
+<h3>Where to watch Conference League</h3><p>KickPulse shows scores, events, statistics and lineups, not video. For a live broadcast, check the official TV or streaming partner in your country.</p></div>
   <h2>About UEFA Conference League live scores</h2>
   <p>The UEFA Conference League is UEFA&#x27;s third club competition and gives clubs from many European countries a place in continental football. Matches are usually played on Thursdays. This page shows the live score, the match status and the kick-off time in your own time zone for every game on the selected date.</p>
   <p>Because the competition is spread across many European countries, one match day can include a long list of games that kick off at different times. The Live tab above the list helps you jump straight to the matches that are being played right now, and the Finished tab shows completed results.</p>
@@ -88,7 +93,7 @@
   <p>The UEFA Conference League is the newest of the three European club competitions. It started in the 2021-22 season and was created to give clubs from smaller football countries a real chance of playing European knockout football. Roma won the first edition. Since 2024-25 it has used a league phase like the other two competitions, and the matches are normally played on Thursday evenings.</p>
   <p>For a fan, it is a good place to find football matches today that are not always in the spotlight, and a good page to keep open on a Thursday when several games are played at once. Live scores, minute by minute updates and final results are all in one list. If you follow a team in a smaller league, try typing its name into the search box to see whether it is playing.</p>
   <p>Open any game for the events timeline, team statistics and lineups where the data provider offers them.</p>
-  <h2 style="margin-top:22px">Frequently asked questions</h2>
+  <h2 style="margin-top:22px">Frequently asked questions</h2><h3>What Conference League matches are on today?</h3><p>Open the All tab to see every Conference League match for the selected date, with kick-off times in your own time zone.</p><h3>Where can I watch Conference League?</h3><p>KickPulse shows scores, not video. Check the official TV or streaming partner of the competition in your country.</p>
   <h3>How often do Conference League scores update?</h3><p>While matches are live, this page checks for new scores about every 30 seconds. You can also press the refresh button at the top.</p><h3>What can I see for each Conference League match?</h3><p>Tap a match to open its details: a timeline of goals, cards and substitutions, team statistics such as possession, shots and corners, and the lineups. Some details depend on what the data provider offers for that match.</p><h3>Where can I see Conference League results?</h3><p>Choose Yesterday or any earlier date in the date bar to see finished matches with their final scores.</p><h3>Is KickPulse free to use for Conference League scores?</h3><p>Yes. KickPulse is free to use. Scores come from a public data feed and may be delayed or unavailable at times.</p>
   <h3>When did the Conference League start?</h3><p>The UEFA Conference League started in the 2021-22 season, and Roma were the first winners.</p><h3>Is the Conference League played on the same day as the Europa League?</h3><p>Yes, both competitions usually play on Thursday evenings, so this page and the Europa League page are often busy on the same night.</p>
   <h2 style="margin-top:26px">More live scores</h2>
@@ -113,7 +118,7 @@
 </section>
 <footer>
   <div class="wrap">
-    <nav class="fnav" aria-label="Footer"><a href="/">Home</a><a href="/about/">About</a><a href="/privacy-policy/">Privacy policy</a></nav>
+    <nav class="fnav" aria-label="Footer"><a href="/">Home</a><a href="/about/">About</a><a href="/privacy-policy/">Privacy policy</a><a href="https://kickpulse-final.vercel.app/">Blog</a></nav>
     <div id="socialLinks" class="links"></div>
     <p>KickPulse shows live football scores, fixtures, results, match events, statistics and lineups. Times are shown in your own time zone (<span id="tz"></span>).</p>
     <p>Scores come from ESPN's public data feed and can be a little delayed or occasionally unavailable. KickPulse is not affiliated with ESPN or any league or club. We use privacy-friendly analytics to count visits.</p>
@@ -128,7 +133,7 @@
 </div>
 
 <noscript><div class="wrap"><p class="notice">Please turn on JavaScript to see live scores.</p></div></noscript>
-<script defer src="/assets/app.ccb1c7ed.min.js"></script>
-<script defer src="/assets/league-table.63fe6cb9.js"></script>
+<script defer src="/assets/app.e2b39741.v2.min.js"></script>
+<script defer src="/assets/league-table.b5e8a2e2.v2.js"></script>
 </body>
 </html>

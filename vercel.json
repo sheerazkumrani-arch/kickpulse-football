@@ -45,24 +45,7 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/api/page?p=home"
-    },
-    {
-      "source": "/:p(about|privacy-policy|football-matches-today|real-madrid-live-score|soccer-live-scores|world-cup-2026-live-scores|champions-league-live-scores|europa-league-live-scores|conference-league-live-scores|nations-league-live-scores|premier-league-live-scores|la-liga-live-scores|serie-a-live-scores|bundesliga-live-scores|ligue-1-live-scores|mls-live-scores|saudi-pro-league-live-scores|fa-cup-live-scores)",
-      "destination": "/api/page?p=:p"
-    },
-    {
-      "source": "/:p(about|privacy-policy|football-matches-today|real-madrid-live-score|soccer-live-scores|world-cup-2026-live-scores|champions-league-live-scores|europa-league-live-scores|conference-league-live-scores|nations-league-live-scores|premier-league-live-scores|la-liga-live-scores|serie-a-live-scores|bundesliga-live-scores|ligue-1-live-scores|mls-live-scores|saudi-pro-league-live-scores|fa-cup-live-scores)/",
-      "destination": "/api/page?p=:p"
-    }
-  ],
-  "functions": {
-    "api/page.js": {
-      "includeFiles": "_pages/**",
-      "maxDuration": 15
-    }
-  }
+  "framework": null,
+  "buildCommand": "node scripts/prerender.js",
+  "outputDirectory": "dist"
 }
