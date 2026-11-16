@@ -1,5 +1,5 @@
-KickPulse update 4 (Nov 2026)
-- Pitchside Notes: pulsing announcement bar on every page, and a 'NEW ON PITCHSIDE NOTES' box on home and all MLS pages.
-- The box shows the 3 newest blog articles. They come from kickpulse-final.vercel.app/articles.json (deploy the blog zip v4 FIRST).
-- At each deploy the latest articles are also written into the HTML; in the browser they refresh live.
-- Earlier: MLS sub-pages are full live pages; all 13 league buttons visible with icons.
+KickPulse update 5 (Nov 2026)
+- Live scores: server now sends browser-like headers to ESPN; only a real 404 counts as 'no matches'; league pages fall back to loading ESPN directly if the server list is empty.
+- New /api/health page shows whether Vercel can reach ESPN.
+- Pitchside Notes bar is bigger, colourful and the button pulses.
+- New file names (app...v3.min.js, kp-leagues.v4.css) so browsers drop the old cached files.

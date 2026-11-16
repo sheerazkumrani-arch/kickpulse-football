@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
       const url = BASE + slug + "/scoreboard?dates=" + dates + (limit ? "&limit=" + limit : "");
       const r = await getJson(url, 8000);
       if (r.data) out[slug] = r.data;
-      else if (r.status >= 400 && r.status < 500) out[slug] = { events: [] }; // league not offered by ESPN: treat as empty
+      else if (r.status === 404) out[slug] = { events: [] }; // league really not offered by ESPN: treat as empty
       else { out[slug] = null; transient++; } // timeout or ESPN error: browser may retry directly
     })
   );
