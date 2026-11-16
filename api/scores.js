@@ -16,12 +16,12 @@ module.exports = async (req, res) => {
   await Promise.all(
     leagues.map(async (slug) => {
       const url = BASE + slug + "/scoreboard?dates=" + dates + (limit ? "&limit=" + limit : "");
-      const r = await getJson(url, 8000);
+      const r = await getJson(url, 5000, 10000);
       if (r.data) out[slug] = r.data;
       else if (r.status === 404) out[slug] = { events: [] }; // league really not offered by ESPN: treat as empty
       else { out[slug] = null; transient++; } // timeout or ESPN error: browser may retry directly
     })
   );
   // Short cache while things are live; stale copy allowed for a minute so visitors never wait.
-  send(res, 200, out, transient ? "public, s-maxage=5" : "public, s-maxage=20, stale-while-revalidate=60");
+  send(res, 200, out, transient ? "public, s-maxage=5" : "public, s-maxage=20, stale-while-revalidate=120");
 };

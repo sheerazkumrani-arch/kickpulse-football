@@ -3,3 +3,10 @@ KickPulse update 5 (Nov 2026)
 - New /api/health page shows whether Vercel can reach ESPN.
 - Pitchside Notes bar is bigger, colourful and the button pulses.
 - New file names (app...v3.min.js, kp-leagues.v4.css) so browsers drop the old cached files.
+
+KickPulse update 6 (Nov 2026)
+- mls-live-scores: new block "MLS scoreboard: live scores, results and matchups" (class kp-mls3) written from Search Console queries
+  (mls scores, mls scoreboard, mls results, mls matchups, livescore mls...), plus 5 new FAQs (also added to FAQPage JSON-LD).
+- mls-schedule: short "MLS matchups this week" paragraph.
+- api/_espn.js: shared in-memory cache - visitors in the same seconds share one ESPN call; last good copy is served if ESPN is slow or down.
+- api/scores.js, standings.js, summary.js: shorter ESPN timeout (5-6 s), cache times passed in. Titles, URLs, design, JS files untouched.
