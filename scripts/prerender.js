@@ -27,6 +27,9 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
   for (const n of fs.readdirSync(R)) { if (SKIP.has(n) || /\.zip$|^README-DEPLOY\.txt$|^CHANGES-KICKPULSE\.txt$/.test(n)) continue; fs.cpSync(path.join(R, n), path.join(OUT, n), { recursive: true }); }
+  // Always serve the newest script: if assets/app.e2b39741.v6.min.js exists, every page that names an older app.e2b39741.vN.min.js is switched to it in the deployed copy.
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : /\.html$/.test(e.name) ? [path.join(d, e.name)] : []));
+  if (fs.existsSync(path.join(OUT, "assets", "app.e2b39741.v6.min.js"))) for (const f of walk(OUT)) { const h = fs.readFileSync(f, "utf8"), n = h.replace(/app\.e2b39741\.v[0-9]+\.min\.js/g, "app.e2b39741.v6.min.js"); if (n !== h) fs.writeFileSync(f, n); }
   const pages = [path.join(OUT, "index.html")].concat(fs.readdirSync(OUT).map((d) => path.join(OUT, d, "index.html")));
   let ok = 0, blogHtml = "";
   try { // latest Pitchside Notes articles, written into the HTML so Google sees them
