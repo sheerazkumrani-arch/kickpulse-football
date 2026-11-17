@@ -1,11 +1,47 @@
 // One request from the browser -> many ESPN scoreboard calls made here, answered together and cached on Vercel's edge.
 // Example: /api/scores?leagues=eng.1,esp.1&dates=20261110-20261112&limit=300
-// Reliability: calls ESPN in small groups (so ESPN does not block a burst of 50 calls), retries a failed league once,
-// and if ESPN still fails it serves the last good copy this server remembers (up to 10 minutes) instead of nothing.
+// If ESPN answers "400 bad request" for a league (it does this for some leagues/dates, e.g. outside a season),
+// we quietly try simpler versions of the same question before giving up, and treat a final 400 as "no matches".
 const { SLUG, DATES, getJson, send } = require("./_espn");
 const BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/";
-const MEM = new Map(); // key -> { t, data }  (kept while this server instance stays warm)
-const POOL = 10, STALE_MS = 10 * 60 * 1000, BUDGET_MS = 8500;
+
+const pad = (n) => (n < 10 ? "0" : "") + n;
+function days(range) {
+  const [a, b] = range.split("-");
+  if (!b) return [a];
+  const d = (s) => new Date(Date.UTC(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8)));
+  const out = [];
+  for (let t = d(a), end = d(b), n = 0; t <= end && n < 8; t = new Date(t.getTime() + 864e5), n++) out.push(t.getUTCFullYear() + pad(t.getUTCMonth() + 1) + pad(t.getUTCDate()));
+  return out;
+}
+
+const MEMO = new Map(); // finished league answers kept for 10 seconds (also remembers "ESPN says 400")
+async function league(slug, dates, limit) {
+  const key = slug + "|" + dates + "|" + limit, hit = MEMO.get(key);
+  if (hit && Date.now() - hit.t < 10000) return hit.v;
+  const one = (d, lim) => getJson(BASE + slug + "/scoreboard" + (d ? "?dates=" + d + (lim ? "&limit=" + lim : "") : ""), 5000, 10000);
+  let v;
+  const r1 = await one(dates, limit);
+  if (r1.data) v = r1.data;
+  else if (r1.status === 404) v = { events: [] };
+  else if (r1.status === 400) {
+    // simpler versions of the same question
+    let r = limit ? await one(dates, "") : { data: null, status: 400 };
+    if (r.data) v = r.data;
+    else {
+      const parts = await Promise.all(days(dates).map((d) => one(d, "")));
+      const ok = parts.filter((x) => x.data);
+      if (ok.length) v = { events: [].concat.apply([], ok.map((x) => x.data.events || [])) };
+      else if (parts.every((x) => x.status === 400 || x.status === 404)) {
+        r = await one("", ""); // ESPN's own default day
+        v = r.data ? r.data : r.status === 400 || r.status === 404 ? { events: [] } : null;
+      } else v = null;
+    }
+  } else v = null; // timeout or ESPN error: browser may retry directly
+  MEMO.set(key, { t: Date.now(), v });
+  if (MEMO.size > 300) { for (const k of MEMO.keys()) if (Date.now() - MEMO.get(k).t > 10000) MEMO.delete(k); }
+  return v;
+}
 
 module.exports = async (req, res) => {
   const q = req.query || {};
@@ -15,21 +51,14 @@ module.exports = async (req, res) => {
   if (!leagues.length || leagues.length > 60 || !leagues.every((s) => SLUG.test(s)) || !DATES.test(dates) || (limit && !/^\d{1,3}$/.test(limit))) {
     return send(res, 400, { error: "bad request" });
   }
-  const t0 = Date.now(), out = {};
-  let transient = 0, next = 0;
-  async function one(slug) {
-    const key = slug + "|" + dates + "|" + limit;
-    const url = BASE + slug + "/scoreboard?dates=" + dates + (limit ? "&limit=" + limit : "");
-    let r = await getJson(url, 5000);
-    if (!r.data && r.status !== 404 && Date.now() - t0 < 5500) { await new Promise((ok) => setTimeout(ok, 350)); r = await getJson(url.replace("://site.api.", "://site.web.api."), 3000); } // second try uses ESPN's other host
-    if (r.data) { MEM.set(key, { t: Date.now(), data: r.data }); if (MEM.size > 400) MEM.delete(MEM.keys().next().value); return r.data; }
-    if (r.status === 404) return { events: [] }; // league really not offered by ESPN: treat as empty
-    const old = MEM.get(key);
-    if (old && Date.now() - old.t < STALE_MS) return old.data; // ESPN failed: show the last good copy
-    transient++; return null; // browser may retry ESPN directly for this league
-  }
-  async function worker() { while (next < leagues.length && Date.now() - t0 < BUDGET_MS) { const s = leagues[next++]; out[s] = await one(s); } }
-  await Promise.all(Array.from({ length: Math.min(POOL, leagues.length) }, worker));
-  for (const s of leagues) if (!(s in out)) { out[s] = null; transient++; } // ran out of time budget
-  send(res, 200, out, transient ? "public, s-maxage=5, stale-while-revalidate=30" : "public, s-maxage=20, stale-while-revalidate=60");
+  const out = {};
+  let transient = 0;
+  await Promise.all(
+    leagues.map(async (slug) => {
+      const v = await league(slug, dates, limit);
+      out[slug] = v;
+      if (!v) transient++;
+    })
+  );
+  send(res, 200, out, transient ? "public, s-maxage=5" : "public, s-maxage=20, stale-while-revalidate=120");
 };
