@@ -21,3 +21,12 @@ KickPulse update 8 (Nov 2026) - friendly "no matches" box instead of "Could not 
 - Articles are matched to the league by words in the title, description, URL (or optional "league", "tags", "category", "keywords" fields in articles.json). Keywords per league are in the KK list at the top of the JS file.
 - If no article matches the league, the latest 3 Pitchside Notes articles are shown instead.
 - Technical text like "HTTP 400" is never shown to visitors. Only a real offline browser shows "You seem to be offline".
+
+KickPulse update 9 (Nov 2026) - ESPN live scores work again + Pitchside slider
+- assets/app.e2b39741.v7.min.js (all pages now point to it; v5 was still in use, v6 was never linked):
+  * League pages (MLS, Premier League ...) ask ESPN straight from the visitor's browser FIRST (the way that always worked),
+    and use /api/scores only as a backup. An empty answer from the server is no longer trusted as "no matches".
+  * Home / all-leagues pages: one /api/scores call; if the server returns nothing at all, the browser asks ESPN itself.
+  * Refresh button and midnight rollover from v6 included. Interface, design and text are unchanged.
+- assets/pn.v2.js (pages point to it): top bar and the Pitchside box now slide through ALL articles from the blog's articles.json
+  (arrows, dots, swipe, auto-slide, pauses on hover/touch). If the blog is unreachable the built-in text stays.
