@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>KickPulse ESPN test</title>
+<style>body{font:16px/1.5 system-ui,Arial,sans-serif;max-width:760px;margin:24px auto;padding:0 16px;color:#111}
+h1{font-size:22px}.r{border:1px solid #ddd;border-radius:10px;padding:12px 14px;margin:10px 0}.ok{border-color:#16a34a;background:#f0fdf4}.bad{border-color:#dc2626;background:#fef2f2}.wait{background:#f8fafc}
+b{display:block}pre{white-space:pre-wrap;background:#0f172a;color:#e2e8f0;padding:12px;border-radius:8px;font-size:13px}button{padding:10px 16px;border-radius:8px;border:0;background:#f97316;color:#fff;font-weight:700;cursor:pointer}</style></head>
+<body><h1>KickPulse - ESPN test</h1>
+<p>This page checks 4 things. Wait about 15 seconds, then send me a screenshot of the whole page (or press the button and paste the text).</p>
+<div id="o"></div><p><button id="b">Copy result</button></p><pre id="s">Testing...</pre>
+<script>
+var out=document.getElementById("o"),sum=[];
+function row(id,title){var d=document.createElement("div");d.className="r wait";d.id=id;d.innerHTML="<b>"+title+"</b><span>testing...</span>";out.appendChild(d);return d}
+function done(d,ok,txt){d.className="r "+(ok?"ok":"bad");d.querySelector("span").textContent=txt;sum.push((ok?"OK   ":"FAIL ")+d.querySelector("b").textContent+" -> "+txt);document.getElementById("s").textContent=sum.join("\n")}
+function two(n){return n<10?"0"+n:""+n}
+function get(u,ms){var c=new AbortController(),t=Date.now(),k=setTimeout(function(){c.abort()},ms||12000);
+ return fetch(u,{signal:c.signal,cache:"no-store"}).then(function(r){var st=r.status;return r.text().then(function(x){clearTimeout(k);var j=null;try{j=JSON.parse(x)}catch(e){}return{st:st,j:j,ms:Date.now()-t,len:x.length}})},function(e){clearTimeout(k);return{st:0,err:e.name==="AbortError"?"timed out":"network/CORS/blocked: "+e.message,ms:Date.now()-t}})}
+function ev(j){return j&&j.events?j.events.length:null}
+function live(j){return (j&&j.events||[]).filter(function(e){return e.status&&e.status.type&&e.status.type.state==="in"}).length}
+var d=new Date(),ymd=d.getFullYear()+two(d.getMonth()+1)+two(d.getDate());
+var r1=row("a","1. Browser -> ESPN directly (the old way that worked)"),r2=row("b","2. Your server: /api/health (can Vercel reach ESPN?)"),r3=row("c","3. Your server: /api/scores (what the site uses as backup)"),r4=row("d","4. Which script file the live page uses (must say v7)");
+get("https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates="+ymd).then(function(x){
+ if(x.st===200&&x.j)done(r1,true,"works. "+ev(x.j)+" MLS matches today, "+live(x.j)+" live now ("+x.ms+" ms)");
+ else done(r1,false,x.err?x.err:"ESPN answered HTTP "+x.st+(x.st===400?" (can be normal if no MLS games today)":"")+" ("+x.ms+" ms)")});
+get("/api/health").then(function(x){
+ if(x.st===200&&x.j)done(r2,!!x.j.ok,"ESPN status seen by server: "+x.j.espn_status+", events: "+x.j.events_found+". "+x.j.note);
+ else done(r2,false,x.err?x.err:"HTTP "+x.st+(x.st===404?" - the /api folder is NOT deployed on this site":" - server function crashed or is blocked"))});
+get("/api/scores?leagues=usa.1&dates="+ymd+"&limit=100").then(function(x){
+ if(x.st===200&&x.j){var u=x.j["usa.1"];done(r3,!!u&&ev(u)>0,u?ev(u)+" MLS matches, "+live(u)+" live ("+x.ms+" ms)"+(ev(u)===0?" - server sees 0 matches":""):"server returned null for usa.1 (ESPN failed on the server)")}
+ else done(r3,false,x.err?x.err:"HTTP "+x.st+(x.st===404?" - the /api folder is NOT deployed on this site":""))});
+get("/mls-live-scores/").then(function(x){
+ fetch("/mls-live-scores/",{cache:"no-store"}).then(function(r){return r.text()}).then(function(h){var m=h.match(/app\.e2b39741\.(v\d+\.)?min\.js|app\.[a-z0-9]+\.min\.js/);
+  var v=m?m[0]:"none found";done(r4,/v7/.test(v),"page loads: "+v+(/v7/.test(v)?"":"  (new fix file v7 is not live yet - upload the updated project)"))},function(){done(r4,false,"could not read the page")})});
+document.getElementById("b").onclick=function(){var t=document.getElementById("s").textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){alert("Copied")},function(){alert("Select the text below and copy it")})};
+</script></body></html>
