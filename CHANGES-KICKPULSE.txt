@@ -30,3 +30,10 @@ KickPulse update 9 (Nov 2026) - ESPN live scores work again + Pitchside slider
   * Refresh button and midnight rollover from v6 included. Interface, design and text are unchanged.
 - assets/pn.v2.js (pages point to it): top bar and the Pitchside box now slide through ALL articles from the blog's articles.json
   (arrows, dots, swipe, auto-slide, pauses on hover/touch). If the blog is unreachable the built-in text stays.
+
+KickPulse update 10 (Nov 2026) - step 1: big league buttons + side menu (MLS first)
+- New file assets/kp-side.v1.css (new name so browsers drop old cache); all 23 pages with the old league bar now use the new menu and link to it.
+- League bar replaced by big, rounded buttons with coloured icons. MLS is the biggest, first button, with its own sub-buttons (Live scores, Schedule, On TV, Playoffs, Inter Miami, Matches today).
+- Menu shows only: MLS, All leagues, Saudi Pro League, Premier League, La Liga, Champions League, Serie A, Bundesliga. Other leagues (Ligue 1, Europa, Conference, Nations League, FA Cup, World Cup 2026) stay live at the same URLs and are linked in a small "More" line under the side menu.
+- League and MLS pages on desktop (1100px+): fixed menu on the left side. Phones and other pages: one row of big buttons (swipe on phones). No dropdowns.
+- Old MLS text row (kphubbar) is hidden only when the side menu shows it. No page text, titles, URLs or scripts were changed.
