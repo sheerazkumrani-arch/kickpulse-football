@@ -2,6 +2,7 @@
 // into each league page's HTML (so Google sees real content). If ESPN fails, pages stay as they are.
 const fs = require("fs"), path = require("path");
 const { getJson } = require("../api/_espn");
+const FX = require("../assets/kp-fixtures.v1.js");
 const R = path.join(__dirname, ".."), OUT = path.join(R, "dist");
 const SKIP = new Set([".git", ".vercel", "node_modules", "dist", "api", "scripts", "_pages"]);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -45,8 +46,12 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
       const m = html.match(/<body[^>]*data-league="([a-z0-9._-]+)"/);
       if (!m) return;
       const b = "https://site.api.espn.com/apis/";
+      const fxm = html.match(/<section class="kpfx" id="kpfx" data-slug="([^"]+)" data-name="([^"]*)" data-team="([^"]*)"/);
+      const fxP = fxm ? FX.collect(fxm[1], fxm[3], (u) => getJson(u, 6000)).catch(() => null) : Promise.resolve(null);
       const [sb, st] = await Promise.all([getJson(b + "site/v2/sports/soccer/" + m[1] + "/scoreboard", 6000), getJson(b + "v2/sports/soccer/" + m[1] + "/standings", 6000)]);
-      const n = swap(swap(html, "MATCHES", matchesHtml(sb.data)), "TABLE", tableHtml(st.data));
+      let n = swap(swap(html, "MATCHES", matchesHtml(sb.data)), "TABLE", tableHtml(st.data));
+      const fx = await fxP;
+      if (fx && fxm) n = swap(swap(n, "FXRES", FX.list(fx.res, "res", fxm[2], FX.fmtUtc)), "FXUP", FX.list(fx.up, "up", fxm[2], FX.fmtUtc));
       if (n !== html) { fs.writeFileSync(f, n); ok++; }
     } catch (e) { /* keep the page as it is */ }
   }));

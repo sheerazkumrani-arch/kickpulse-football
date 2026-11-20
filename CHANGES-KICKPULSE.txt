@@ -37,3 +37,10 @@ KickPulse update 10 (Nov 2026) - step 1: big league buttons + side menu (MLS fir
 - Menu shows only: MLS, All leagues, Saudi Pro League, Premier League, La Liga, Champions League, Serie A, Bundesliga. Other leagues (Ligue 1, Europa, Conference, Nations League, FA Cup, World Cup 2026) stay live at the same URLs and are linked in a small "More" line under the side menu.
 - League and MLS pages on desktop (1100px+): fixed menu on the left side. Phones and other pages: one row of big buttons (swipe on phones). No dropdowns.
 - Old MLS text row (kphubbar) is hidden only when the side menu shows it. No page text, titles, URLs or scripts were changed.
+
+KickPulse update 11 (Nov 2026) - step 2: recent results + upcoming matches on league pages
+- New block above the league table on: MLS (live scores, schedule, on TV, playoffs), Inter Miami, Saudi Pro League, Premier League, La Liga, Champions League, Serie A, Bundesliga.
+  Left "Recent results" (last 10 finished games), right "Upcoming matches" (next 10). Inter Miami page: only Inter Miami games (5 + 5). Shown whether or not a match is live.
+- Works with ESPN's date-range scoreboard, asked from the visitor's browser in 14/28-day steps until enough games are found (MLS looks up to ~4 months ahead for the next season). ESPN "400/404 = nothing here" is treated as empty, never as an error. Result is kept 5 minutes per visitor (sessionStorage).
+- scripts/prerender.js writes the same lists into the HTML at deploy (UTC times) so Google sees real content; the browser then replaces them with local times. If ESPN is not reachable the page keeps its placeholder text.
+- New files: assets/kp-fixtures.v1.js, assets/kp-fx.v1.css. Existing text, scripts and API routes are not changed.
