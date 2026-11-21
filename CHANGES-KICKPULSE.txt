@@ -49,3 +49,11 @@ KickPulse update 12 (Nov 2026) - fix empty "Recent results / Upcoming matches" b
 - Cause: ESPN refuses long date ranges (HTTP 400) and the block read that as "no matches". Now it asks in 3-day windows like the main app, and if ESPN refuses a range it asks day by day. A refused range is never treated as "no matches"; if ESPN cannot be reached the boxes say so instead of claiming there are no games.
 - Build time (prerender) writes lists into the HTML only when it really got matches.
 - assets/kp-fixtures.v1.js replaced by assets/kp-fixtures.v2.js (new name because /assets is cached for a year). The 11 pages point to v2. You may delete the old v1 file from GitHub.
+
+KickPulse update 13 (Nov 2026) - step 3A: new MLS pages built around Search Console keywords
+- New page /mls-matches-today/ (keywords: mls matches today, mls games tonight, mls today games, mls match today). Top summary sentence + table of today's MLS games in US Eastern, US Pacific, Pakistan time and the visitor's own time; if there is no game today it shows the next match day. Day = US Eastern date. Refreshes every 2 minutes while open.
+- New page /mls-results/ (keywords: mls results, results yesterday, last night). Summary sentence + last ~40 results grouped by match day, newest first.
+- Both pages: own title/description/canonical, BreadcrumbList + FAQPage schema (same text as the visible FAQ), original text, links to all MLS pages. Lists are also written into the HTML at deploy (prerender.js).
+- /mls-live-scores/: existing text untouched; one new section at the bottom ("MLS scoreboard, live score and results" + 4 questions, also added to its FAQ schema) that links to the two new pages.
+- Side menu: new buttons Matches today and Results. MLS text row (phones) got "MLS today" and "Results". sitemap.xml has the 2 new URLs (lastmod 2026-11-20).
+- Files: assets/kp-fixtures.v3.js (replaces v2), assets/kp-mls.v1.js, assets/kp-mls.v1.css. You may delete assets/kp-fixtures.v2.js from GitHub.
