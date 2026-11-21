@@ -65,3 +65,8 @@ KickPulse update 14 (Nov 2026) - new look "Pitch Green" (design only, no functio
   TODO: open assets/pn.v3.js and put the exact French and Urdu blog page addresses into FR_URL and UR_URL (top of the file). Until then both open the blog home page.
 - Google Fonts link now also loads Barlow Condensed. Old files kp-side.v1.css and pn.v2.js can be deleted from GitHub.
 - MLS text row: the right-hand "Matches today" (all football) is now called "All matches today" so it is not confused with the new "MLS today".
+
+KickPulse update 15 (Nov 2026) - step 3B: MLS standings page
+- New page /mls-standings/ (keywords: mls standings, mls table, mls league table, eastern/western conference standings). Summary sentence (leader of each conference + most points overall) and both conference tables with P W D L GF GA GD Pts; refreshed every 3 minutes while open; also written into the HTML at deploy (prerender.js). Title/description/canonical, BreadcrumbList + FAQPage schema, original text, links to the other MLS pages.
+- New files: assets/kp-standings.v1.js, assets/kp-st.v1.css.
+- Side menu and MLS text row got a "Standings" button; the other new MLS pages and /mls-live-scores/ link to the standings page; sitemap.xml has the new URL.

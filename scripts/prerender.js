@@ -4,6 +4,7 @@ const fs = require("fs"), path = require("path");
 const { getJson } = require("../api/_espn");
 const FX = require("../assets/kp-fixtures.v3.js");
 const MLS = require("../assets/kp-mls.v1.js");
+const STD = require("../assets/kp-standings.v1.js");
 const R = path.join(__dirname, ".."), OUT = path.join(R, "dist");
 const SKIP = new Set([".git", ".vercel", "node_modules", "dist", "api", "scripts", "_pages"]);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -52,6 +53,8 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
       const tdm = html.match(/<section class="kptd" id="kptd" data-slug="([^"]+)"/), rsm = html.match(/<section class="kpres" id="kpres" data-slug="([^"]+)"/);
       const tdP = tdm ? FX.collect(tdm[1], "", (u) => getJson(u, 6000), { strict: true, nR: 1, nU: 12, maxBack: 3 }).catch(() => null) : Promise.resolve(null);
       const rsP = rsm ? FX.collect(rsm[1], "", (u) => getJson(u, 6000), { strict: true, nR: 40, nU: 1, maxBack: 30, maxFwd: 3 }).catch(() => null) : Promise.resolve(null);
+      const stm = /<section class="kpst" id="kpst"/.test(html);
+      const stP = stm ? getJson("https://site.api.espn.com/apis/v2/sports/soccer/usa.1/standings", 6000).then((r) => r.data).catch(() => null) : Promise.resolve(null);
       const [sb, st] = await Promise.all([getJson(b + "site/v2/sports/soccer/" + m[1] + "/scoreboard", 6000), getJson(b + "v2/sports/soccer/" + m[1] + "/standings", 6000)]);
       let n = swap(swap(html, "MATCHES", matchesHtml(sb.data)), "TABLE", tableHtml(st.data));
       const fx = await fxP;
@@ -59,6 +62,8 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
       const td = await tdP, rs = await rsP;
       if (td && tdm) { const v = MLS.today(td, Date.now()); n = swap(swap(n, "TDANS", esc(MLS.ans(v))), "TDTBL", MLS.tbl(v, "")); n = n.replace('id="kptdAns" data-ph="1"', 'id="kptdAns"'); }
       if (rs && rsm) { n = swap(swap(n, "RESANS", esc(MLS.resAns(rs))), "RESLIST", MLS.resHtml(rs)); n = n.replace('id="kpresAns" data-ph="1"', 'id="kpresAns"'); }
+      const sd = await stP;
+      if (sd && stm && STD.groups(sd).length) { n = swap(swap(n, "STANS", esc(STD.ans(sd))), "STTBL", STD.tbl(sd)); n = n.replace('id="kpstAns" data-ph="1"', 'id="kpstAns"'); }
       if (n !== html) { fs.writeFileSync(f, n); ok++; }
     } catch (e) { /* keep the page as it is */ }
   }));
