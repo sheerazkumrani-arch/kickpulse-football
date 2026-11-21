@@ -70,3 +70,10 @@ KickPulse update 15 (Nov 2026) - step 3B: MLS standings page
 - New page /mls-standings/ (keywords: mls standings, mls table, mls league table, eastern/western conference standings). Summary sentence (leader of each conference + most points overall) and both conference tables with P W D L GF GA GD Pts; refreshed every 3 minutes while open; also written into the HTML at deploy (prerender.js). Title/description/canonical, BreadcrumbList + FAQPage schema, original text, links to the other MLS pages.
 - New files: assets/kp-standings.v1.js, assets/kp-st.v1.css.
 - Side menu and MLS text row got a "Standings" button; the other new MLS pages and /mls-live-scores/ link to the standings page; sitemap.xml has the new URL.
+
+KickPulse update 16 (Nov 2026) - step 3C: fresh HTML for Google
+- scripts/prerender.js: if ESPN refuses the dated requests at build time, the recent/upcoming lists, "MLS matches today" and "MLS results" are filled from the plain scoreboard instead of staying on "Loading". Nothing is written when there is nothing to say (never "no matches" from the build). The build log now prints how ESPN answered ("ESPN answers during this build"). sitemap.xml lastmod of the live pages is set to the build date. .github is not published.
+- NEW .github/workflows/refresh.yml: asks Vercel to rebuild every hour (needs the GitHub secret VERCEL_DEPLOY_HOOK).
+- NEW .github/workflows/indexnow.yml + root file 9b0a1b976d9e17a1b950fae47a2496d1.txt: pings Bing/IndexNow with the MLS pages every 6 hours.
+- llms.txt: new MLS pages block. robots.txt unchanged: User-agent * Allow / already lets search and AI crawlers in.
+- assets/kp-fixtures.v3.js: only exports norm for the build (browser behaviour unchanged).

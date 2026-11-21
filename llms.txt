@@ -8,6 +8,17 @@
 - [About KickPulse](https://kickpulse-football.vercel.app/about/): What the website offers and where the data comes from.
 - [Privacy policy](https://kickpulse-football.vercel.app/privacy-policy/): How visitor information, analytics and cookies are handled.
 
+## MLS (Major League Soccer) pages
+
+- [MLS live scores](https://kickpulse-football.vercel.app/mls-live-scores/): Live MLS scores, results and fixtures, with the Eastern and Western Conference tables.
+- [MLS matches today](https://kickpulse-football.vercel.app/mls-matches-today/): Today's MLS games, or the next match day, with kick-off times in US Eastern, US Pacific and Pakistan time.
+- [MLS results](https://kickpulse-football.vercel.app/mls-results/): Final scores of recent MLS matches by match day, including yesterday and last night.
+- [MLS standings](https://kickpulse-football.vercel.app/mls-standings/): MLS league table by conference with points, wins, draws, losses and goal difference.
+- [MLS schedule](https://kickpulse-football.vercel.app/mls-schedule/): Upcoming MLS matches in date order.
+- [MLS on TV](https://kickpulse-football.vercel.app/mls-on-tv/): How to watch MLS and which broadcasters the data feed lists.
+- [MLS playoffs](https://kickpulse-football.vercel.app/mls-playoffs/): MLS Cup playoffs matches and results.
+- [Inter Miami live score](https://kickpulse-football.vercel.app/inter-miami-live-score/): Inter Miami results and upcoming matches.
+
 ## Live scores by competition
 
 - [Champions League live scores](https://kickpulse-football.vercel.app/champions-league-live-scores/): Live UEFA Champions League scores, fixtures and results. Tap any match for goals, cards, statistics and lineups.
