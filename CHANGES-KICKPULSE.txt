@@ -57,3 +57,11 @@ KickPulse update 13 (Nov 2026) - step 3A: new MLS pages built around Search Cons
 - /mls-live-scores/: existing text untouched; one new section at the bottom ("MLS scoreboard, live score and results" + 4 questions, also added to its FAQ schema) that links to the two new pages.
 - Side menu: new buttons Matches today and Results. MLS text row (phones) got "MLS today" and "Results". sitemap.xml has the 2 new URLs (lastmod 2026-11-20).
 - Files: assets/kp-fixtures.v3.js (replaces v2), assets/kp-mls.v1.js, assets/kp-mls.v1.css. You may delete assets/kp-fixtures.v2.js from GitHub.
+
+KickPulse update 14 (Nov 2026) - new look "Pitch Green" (design only, no functions changed)
+- New assets/kp-theme.v1.css (loaded last on every page): deep pitch-green + gold instead of many colours, no blue-green gradient headings, condensed uppercase headings (Barlow Condensed), light chalk background, rounded white cards. Colours and type only.
+- New assets/kp-side.v2.css (replaces kp-side.v1.css): bigger condensed side menu / button strip. All league buttons use one colour; MLS card is dark green with a gold ring; the open page is dark green.
+- Pitchside Notes bar: dark green strip, blinking gold dot, blinking gold Read button. It still slides through all blog articles every 5 seconds. assets/pn.v3.js (replaces pn.v2.js): same logic, new colours, plus "Read in French" and "Read in Urdu" messages in the bar and as last two slides of the box, and an "Also available in Francais / Urdu" line in the box.
+  TODO: open assets/pn.v3.js and put the exact French and Urdu blog page addresses into FR_URL and UR_URL (top of the file). Until then both open the blog home page.
+- Google Fonts link now also loads Barlow Condensed. Old files kp-side.v1.css and pn.v2.js can be deleted from GitHub.
+- MLS text row: the right-hand "Matches today" (all football) is now called "All matches today" so it is not confused with the new "MLS today".
