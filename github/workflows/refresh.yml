@@ -1,0 +1,19 @@
+# Every hour: ask Vercel to rebuild the site so the HTML Google reads has fresh matches, tables and blog posts.
+# Needs one secret in GitHub: VERCEL_DEPLOY_HOOK (the Deploy Hook URL from Vercel). Vercel's free plan allows 100 deploys a day; this uses 24.
+name: Refresh KickPulse
+
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask Vercel to rebuild
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "Secret VERCEL_DEPLOY_HOOK is missing"; exit 1; fi
+          curl -fsS -X POST "$HOOK"
