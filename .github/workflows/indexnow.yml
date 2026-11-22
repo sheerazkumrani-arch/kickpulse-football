@@ -1,0 +1,15 @@
+# Every 6 hours: tell Bing and the other IndexNow search engines that the live MLS pages changed (Google does not use IndexNow).
+name: IndexNow ping
+
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit the MLS pages
+        run: |
+          curl -sS -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json; charset=utf-8" -d '{"host":"kickpulse-football.vercel.app","key":"9b0a1b976d9e17a1b950fae47a2496d1","keyLocation":"https://kickpulse-football.vercel.app/9b0a1b976d9e17a1b950fae47a2496d1.txt","urlList":["https://kickpulse-football.vercel.app/","https://kickpulse-football.vercel.app/mls-live-scores/","https://kickpulse-football.vercel.app/mls-matches-today/","https://kickpulse-football.vercel.app/mls-results/","https://kickpulse-football.vercel.app/mls-standings/","https://kickpulse-football.vercel.app/mls-schedule/","https://kickpulse-football.vercel.app/mls-playoffs/","https://kickpulse-football.vercel.app/inter-miami-live-score/"]}'
