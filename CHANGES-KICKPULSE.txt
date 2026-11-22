@@ -77,3 +77,14 @@ KickPulse update 16 (Nov 2026) - step 3C: fresh HTML for Google
 - NEW .github/workflows/indexnow.yml + root file 9b0a1b976d9e17a1b950fae47a2496d1.txt: pings Bing/IndexNow with the MLS pages every 6 hours.
 - llms.txt: new MLS pages block. robots.txt unchanged: User-agent * Allow / already lets search and AI crawlers in.
 - assets/kp-fixtures.v3.js: only exports norm for the build (browser behaviour unchanged).
+
+KickPulse update 17 (Nov 2026) - MLS club pages
+- New pages: /lafc-live-score/, /la-galaxy-live-score/, /seattle-sounders-live-score/, /columbus-crew-live-score/, /new-york-city-fc-live-score/, /atlanta-united-live-score/ (same pattern as the existing Inter Miami page).
+  Each has: summary sentence + cards with the club's position in its conference (points, played, W-D-L, goal difference); recent results and upcoming matches of that club only; its own text (stable facts only), 5 questions + FAQ schema, SportsTeam + Breadcrumb schema; links to the other MLS pages and clubs.
+- Links to the clubs from /mls-standings/, /mls-live-scores/ (new block only) and the Inter Miami page ("More MLS clubs"). The side menu is unchanged on purpose (no clutter); on club pages the MLS button stays highlighted. sitemap.xml and llms.txt list the new pages.
+- assets/kp-standings.v1.js replaced by kp-standings.v2.js (adds club lookup); new assets/kp-club.v1.css. scripts/prerender.js writes the club table position into the HTML. You may delete assets/kp-standings.v1.js from GitHub.
+
+KickPulse update 18 (Nov 2026) - Saudi Pro League fix + French link
+- Saudi Pro League: the site used the code "sau.1", but ESPN's code for the Saudi Pro League is "ksa.1" (checked on ESPN's own table pages). That is why the table said "Could not load" and matches/results were empty. Fixed in assets/app.e2b39741.v11.min.js (new copy of v10), assets/league-table.b5e8a2e2.v3.js (new copy of v2) and the Saudi page (data-league / data-slug). scripts/prerender.js now also picks the newest league-table script by itself (like app and pn), so no page needed editing.
+- Pitchside Notes bar: assets/pn.v4.js (replaces pn.v3.js) reads the French and Urdu addresses from site-config.js (lang: fr / ur). French is set to https://kickpulse-final.vercel.app/fr/. Urdu is empty for now, so the Urdu message and button are hidden until you paste its address. No file other than site-config.js has to change later.
+- You may delete assets/pn.v3.js, app.e2b39741.v10.min.js, league-table.b5e8a2e2.v2.js from GitHub (old copies, no longer used).
