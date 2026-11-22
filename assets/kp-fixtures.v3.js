@@ -86,7 +86,7 @@
     if (!arr.length) return '<p class="kpfx-empty">' + (kind === "res" ? "No recent " + esc(name) + " results found yet." : "No upcoming " + esc(name) + " matches are announced yet. Check back soon.") + "</p>";
     return '<div class="kpfx-box">' + arr.map(function (m) { return row(m, kind, fmt); }).join("") + "</div>";
   }
-  var api = { collect: collect, list: list, row: row, fmtUtc: fmtUtc, fmtLocal: fmtLocal };
+  var api = { collect: collect, norm: norm, list: list, row: row, fmtUtc: fmtUtc, fmtLocal: fmtLocal };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   root.KPFX = api;

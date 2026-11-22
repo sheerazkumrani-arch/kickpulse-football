@@ -91,3 +91,12 @@ KickPulse update 18 (Nov 2026) - Saudi Pro League fix + French link
 
 KickPulse update 19 (Nov 2026) - the build can no longer fail because of a missing helper file
 - scripts/prerender.js loads kp-fixtures, kp-mls, kp-standings and api/_espn safely. If one of them is missing from the repo (for example the assets folder was not uploaded yet), the build still finishes and only that part of the HTML is not pre-filled. Before this, a missing helper stopped the whole deploy ("Production" with a red cross).
+
+KickPulse update 20 (Nov 2026) - Production deploy fixed (red cross)
+- Real cause: files were uploaded into the MAIN folder instead of their folders. The new scripts/prerender.js (update 19) and assets/kp-standings.v2.js, assets/kp-club.v1.css, assets/kp-fixtures.v3.js (update 16/17 versions) were in the root. So GitHub still had the OLD scripts/prerender.js, which loads assets/kp-standings.v2.js directly; that file did not exist in assets/, Node stopped with "Cannot find module" and Vercel showed the red cross. Club pages and /mls-standings/ also asked the browser for the two missing files.
+- assets/kp-standings.v2.js, assets/kp-club.v1.css, assets/kp-fixtures.v3.js: now in assets/ (same content as the copies in the root; kp-fixtures.v3.js is the version that exports norm).
+- scripts/prerender.js: helper files loaded safely (root copy as second choice), global ESPN time budget of 3 minutes (KP_BUDGET_MS), identical ESPN URLs fetched once, watchdog, always exits with code 0, one line "KICKPULSE BUILD SUMMARY: ..." at the end. Not published: github/, prerender.js and root js/css copies that also exist in assets/, package.json. Page text, URLs and design unchanged.
+- scripts/check-site.js: checks that the build files are in the right folders, warns about files in the main folder, the "github" folder and a missing .github/workflows. New option --warn-only.
+- vercel.json: buildCommand also runs the checker as a warning step (never blocks the deploy).
+- package.json (new, no dependencies): engines node 22.x, so Vercel never uses a retired Node version.
+- .github/workflows/refresh.yml, indexnow.yml: same content, now in the right folder (they never ran from "github/").

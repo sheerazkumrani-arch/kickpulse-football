@@ -46,6 +46,6 @@
     }
   ],
   "framework": null,
-  "buildCommand": "node scripts/prerender.js",
+  "buildCommand": "node scripts/prerender.js && node scripts/check-site.js --warn-only",
   "outputDirectory": "dist"
 }

@@ -29,6 +29,12 @@ for (const f of pages) {
   }
 }
 for (const m of sm.matchAll(/<loc>([^<]+)<\/loc>/g)) { const u = m[1].replace(BASE, ""); if (!dirOk(u)) bad.push("sitemap.xml lists a page that does not exist: " + m[1]); }
+// Update 20: files the build needs must be in the right folder (a file in the wrong folder broke the deploy).
+for (const f of ["scripts/prerender.js", "api/_espn.js", "assets/kp-fixtures.v3.js", "assets/kp-mls.v1.js", "assets/kp-standings.v2.js", "assets/kp-club.v1.css", "site-config.js"]) if (!fs.existsSync(path.join(ROOT, f))) bad.push("required file missing: " + f + (fs.existsSync(path.join(ROOT, path.basename(f))) ? " (a copy is in the main folder: upload it into " + path.dirname(f) + "/)" : ""));
+for (const n of fs.readdirSync(ROOT)) if (/\.(js|css)$/.test(n) && n !== "site-config.js" && fs.statSync(path.join(ROOT, n)).isFile()) warn.push("file in the main folder that belongs in assets/ or scripts/: " + n);
+if (fs.existsSync(path.join(ROOT, "github"))) warn.push("folder \"github\" (without dot) should be deleted; workflows belong in .github/workflows/");
+if (!fs.existsSync(path.join(ROOT, ".github", "workflows", "refresh.yml"))) warn.push(".github/workflows/refresh.yml missing: the hourly refresh does not run");
+if (process.argv.includes("--warn-only")) { bad.forEach((b) => warn.push("PROBLEM (not blocking): " + b)); bad.length = 0; }
 console.log("pages checked:", pages.length);
 warn.forEach((w) => console.log("  note:", w));
 if (bad.length) { bad.forEach((b) => console.log("  PROBLEM:", b)); console.log(bad.length + " problem(s)"); process.exit(1); }

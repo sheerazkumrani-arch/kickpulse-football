@@ -1,14 +1,37 @@
 // Runs on Vercel before deploy. Copies the site into dist/ and puts today's matches and the league table
 // into each league page's HTML (so Google sees real content). If ESPN fails, pages stay as they are.
+// Update 20: this script can never fail the deploy because of data: global ESPN time budget, one request per
+// identical URL (memo), helper files loaded safely, always exits with code 0, one summary line at the end.
 const fs = require("fs"), path = require("path");
-const { getJson } = require("../api/_espn");
-const FX = require("../assets/kp-fixtures.v3.js");
-const MLS = require("../assets/kp-mls.v1.js");
-const STD = require("../assets/kp-standings.v2.js");
+const T0 = Date.now(), BUDGET = Number(process.env.KP_BUDGET_MS) || 180000; // about 3 minutes for all ESPN calls together
+// Helper files are loaded safely: if one is missing from the repo the build still finishes (that part of the HTML is just not pre-filled).
+// A copy that was uploaded to the repo root by mistake is used as a second choice.
+const MISSING = [];
+const safe = (...ps) => { for (const p of ps) { try { return require(p); } catch (e) { if (e && e.code !== "MODULE_NOT_FOUND") console.log("helper file has an error, skipped:", p, e.message); } } MISSING.push(ps[0]); console.log("helper file missing, skipped:", ps[0]); return null; };
+const ESPN = safe("../api/_espn") || { getJson: () => Promise.resolve({ status: 0, data: null }) };
+const FX = safe("../assets/kp-fixtures.v3.js", "../kp-fixtures.v3.js") || { collect: () => Promise.resolve(null), norm: () => null, list: () => "", fmtUtc: () => "" };
+if (typeof FX.norm !== "function") FX.norm = () => null; // an older kp-fixtures.v3.js without norm must not break the fallback
+const MLS = safe("../assets/kp-mls.v1.js", "../kp-mls.v1.js") || { today: () => ({}), ans: () => "", tbl: () => "", resAns: () => "", resHtml: () => "" };
+const STD = safe("../assets/kp-standings.v2.js", "../kp-standings.v2.js") || { find: () => null, groups: () => [], ans: () => "", tbl: () => "", clubAns: () => "", clubCard: () => "" };
 const STAT = {}; // how ESPN answered during this build (printed at the end, visible in the Vercel build log)
-const gj = (u, ms) => getJson(u, ms).then((r) => { STAT[r.status] = (STAT[r.status] || 0) + 1; return r; });
+const MEMO = new Map(); let calls = 0, memoHits = 0, overBudget = 0;
+// Every ESPN request goes through here: identical URLs are fetched once, nothing new starts after the time budget.
+const getJson = (u, ms) => {
+  if (MEMO.has(u)) { memoHits++; return MEMO.get(u); }
+  const left = BUDGET - (Date.now() - T0);
+  if (left < 1000) { overBudget++; return Promise.resolve({ status: 0, data: null }); }
+  calls++;
+  const p = Promise.resolve().then(() => ESPN.getJson(u, Math.min(ms || 6000, left))).catch(() => ({ status: 0, data: null }))
+    .then((r) => { r = r || { status: 0, data: null }; STAT[r.status] = (STAT[r.status] || 0) + 1; return r; });
+  MEMO.set(u, p);
+  return p;
+};
+const gj = getJson;
 const R = path.join(__dirname, ".."), OUT = path.join(R, "dist");
-const SKIP = new Set([".git", ".github", ".vercel", "node_modules", "dist", "api", "scripts", "_pages"]);
+const SKIP = new Set([".git", ".github", "github", ".vercel", "node_modules", "dist", "api", "scripts", "_pages", "package.json", "prerender.js"]);
+// Files uploaded to the repo root by mistake that also exist in assets/ (same name) are not published.
+const ASSETN = (() => { try { return new Set(fs.readdirSync(path.join(R, "assets"))); } catch (e) { return new Set(); } })();
+const stray = (n) => /\.(js|css|png|svg|jpg)$/.test(n) && n !== "site-config.js" && ASSETN.has(n) && fs.statSync(path.join(R, n)).isFile();
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const stat = (e, n) => { const s = (e.stats || []).find((x) => x.name === n); return s ? (s.displayValue != null ? s.displayValue : s.value) : ""; };
 function tableHtml(data) {
@@ -28,10 +51,14 @@ function matchesHtml(data) {
   return ev ? "<div class=\"group\"><div class=\"rows\">" + ev + "</div></div>" : "";
 }
 const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag + "-->[\\s\\S]*?<!--/KP:" + tag + "-->"), () => body) : html;
+const done = (why) => { console.log("KICKPULSE BUILD SUMMARY: " + why + " | pages with live data: " + ok + " | ESPN requests: " + calls + " (reused " + memoHits + ", skipped after time budget " + overBudget + ") | ESPN answers (status: count): " + JSON.stringify(STAT) + " | missing helper files: " + (MISSING.join(", ") || "none") + " | " + Math.round((Date.now() - T0) / 1000) + " s"); };
+let ok = 0;
+process.on("unhandledRejection", (e) => console.log("ignored error:", e && e.message));
+const watchdog = setTimeout(() => { done("time budget reached, finished with what was ready"); process.exit(0); }, BUDGET + 60000);
 (async () => {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
-  for (const n of fs.readdirSync(R)) { if (SKIP.has(n) || /\.zip$|^README-DEPLOY\.txt$|^CHANGES-KICKPULSE\.txt$/.test(n)) continue; fs.cpSync(path.join(R, n), path.join(OUT, n), { recursive: true }); }
+  for (const n of fs.readdirSync(R)) { if (SKIP.has(n) || stray(n) || /\.zip$|^README-DEPLOY\.txt$|^CHANGES-KICKPULSE\.txt$/.test(n)) continue; fs.cpSync(path.join(R, n), path.join(OUT, n), { recursive: true }); }
   // Always serve the newest script: the highest-numbered assets/app.e2b39741.vN.min.js is used by every page in the deployed copy (now v7).
   const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : /\.html$/.test(e.name) ? [path.join(d, e.name)] : []));
   const vs = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^app\.e2b39741\.v([0-9]+)\.min\.js$/) || [])[1]).filter(Boolean).map(Number), top = vs.length ? Math.max.apply(null, vs) : 0;
@@ -39,7 +66,7 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
   const pv = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^pn\.v([0-9]+)\.js$/) || [])[1]).filter(Boolean).map(Number), ptop = pv.length ? Math.max.apply(null, pv) : 0;
   for (const f of walk(OUT)) { const h = fs.readFileSync(f, "utf8"); let n = h; if (top) n = n.replace(/app\.e2b39741\.v[0-9]+\.min\.js/g, "app.e2b39741.v" + top + ".min.js"); if (ltop) n = n.replace(/league-table\.b5e8a2e2\.v[0-9]+\.js/g, "league-table.b5e8a2e2.v" + ltop + ".js"); if (ptop) n = n.replace(/assets\/pn\.v[0-9]+\.js/g, "assets/pn.v" + ptop + ".js"); if (n !== h) fs.writeFileSync(f, n); }
   const pages = [path.join(OUT, "index.html")].concat(fs.readdirSync(OUT).map((d) => path.join(OUT, d, "index.html")));
-  let ok = 0, blogHtml = "";
+  let blogHtml = "";
   try { // latest Pitchside Notes articles, written into the HTML so Google sees them
     const bl = await getJson("https://kickpulse-final.vercel.app/articles.json", 6000), arr = (bl.data && bl.data.articles) || [];
     blogHtml = arr.slice(0, 3).map((x) => "<li><a href=\"" + esc(x.url) + "\">" + esc(x.title) + "</a><span>" + esc(x.description) + "</span><small>" + esc(String(x.date).slice(5)) + "</small></li>").join("");
@@ -87,4 +114,6 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
   } catch (e) { /* sitemap stays as it is */ }
   console.log("ESPN answers during this build (status: count):", JSON.stringify(STAT));
   console.log("prerender done, pages with live data:", ok);
-})().catch((e) => console.log("prerender skipped:", e.message));
+  done("OK");
+})().catch((e) => { console.log("prerender stopped early (site still deployed):", e && e.message); done("partial"); })
+  .finally(() => { clearTimeout(watchdog); try { fs.mkdirSync(OUT, { recursive: true }); } catch (e) {} process.exitCode = 0; });
