@@ -2,7 +2,7 @@
 // into each league page's HTML (so Google sees real content). If ESPN fails, pages stay as they are.
 const fs = require("fs"), path = require("path");
 const { getJson } = require("../api/_espn");
-const FX = require("../assets/kp-fixtures.v1.js");
+const FX = require("../assets/kp-fixtures.v2.js");
 const R = path.join(__dirname, ".."), OUT = path.join(R, "dist");
 const SKIP = new Set([".git", ".vercel", "node_modules", "dist", "api", "scripts", "_pages"]);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -47,7 +47,7 @@ const swap = (html, tag, body) => body ? html.replace(new RegExp("<!--KP:" + tag
       if (!m) return;
       const b = "https://site.api.espn.com/apis/";
       const fxm = html.match(/<section class="kpfx" id="kpfx" data-slug="([^"]+)" data-name="([^"]*)" data-team="([^"]*)"/);
-      const fxP = fxm ? FX.collect(fxm[1], fxm[3], (u) => getJson(u, 6000)).catch(() => null) : Promise.resolve(null);
+      const fxP = fxm ? FX.collect(fxm[1], fxm[3], (u) => getJson(u, 6000), { strict: true }).catch(() => null) : Promise.resolve(null);
       const [sb, st] = await Promise.all([getJson(b + "site/v2/sports/soccer/" + m[1] + "/scoreboard", 6000), getJson(b + "v2/sports/soccer/" + m[1] + "/standings", 6000)]);
       let n = swap(swap(html, "MATCHES", matchesHtml(sb.data)), "TABLE", tableHtml(st.data));
       const fx = await fxP;
