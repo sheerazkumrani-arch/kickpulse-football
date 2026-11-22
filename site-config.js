@@ -8,6 +8,12 @@ window.KP_CONFIG = {
   // true = show a cookie notice and load the pixel only after the visitor accepts (recommended). false = load it at once.
   fbPixelNeedsConsent: true,
 
+  // Pitchside Notes pages in other languages (shown in the green bar and in the blog box). Paste the full address, or "" to hide that language.
+  lang: {
+    fr: "https://kickpulse-final.vercel.app/fr/",
+    ur: ""
+  },
+
   // Your social profiles. Paste the full web address (for example https://www.facebook.com/yourpage). Leave "" to hide a link.
   social: {
     facebook: "",
