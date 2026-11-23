@@ -111,3 +111,13 @@ KickPulse update 21 (Nov 2026) - lists filled by JavaScript now load through our
 - robots.txt checked: "Allow: /" does not block /api/. Nothing changed there.
 - Not changed: the main app script (app.e2b39741.v11.min.js) already asks /api/scores first and ESPN only as a fallback.
 - Old files no longer used after this deploy: assets/kp-fixtures.v3.js, assets/kp-mls.v1.js, assets/kp-standings.v2.js (keep them for now; the build uses them if a new file is missing).
+
+KickPulse update 22 (Nov 2026) - league codes, fresh HTML, SEO, domain, speed
+- League code audit (tested live through /api/scores and /api/standings): all league page codes work (eng.1, esp.1, ita.1, ger.1, fra.1, ksa.1, usa.1, uefa.champions, uefa.europa, uefa.europa.conf, uefa.nations, eng.fa). kor.1 and egy.1 returned nothing from ESPN for Sept-Nov 2026 and the table route fails, so they were removed from the app list: assets/app.e2b39741.v12.min.js (copy of v11 without those two). Tournaments that are out of season (World Cup qualifying, Euro, Copa America...) are kept.
+- Built HTML never shows "Loading...": if ESPN gave nothing at build time the placeholders get a neutral sentence (never "no matches"); the browser still fills in the real list. The checker warns if dist/ still has a Loading placeholder.
+- dateModified (build time) added to the WebPage JSON-LD of every page that got live data. Sitemap lastmod now also updated for the 6 new club pages.
+- /inter-miami-live-score/: JSON-LD now has SportsTeam (about), @id, isPartOf and a BreadcrumbList matching the visible breadcrumb (like the other club pages). No visible text changed.
+- Domain readiness: the site address lives in one place (KP_SITE_URL in Vercel, default https://kickpulse-football.vercel.app). Nothing switched. See DOMAIN-MOVE.txt.
+- Speed: every page loaded the Google Fonts CSS twice, once without blocking and once blocking. The build now keeps only the non-blocking link (plus a noscript copy). Look unchanged.
+- .github/workflows/indexnow.yml: also pings the 6 club pages. refresh.yml checked (hourly, needs VERCEL_DEPLOY_HOOK) - unchanged.
+- site-config.js languages checked: fr is set, ur is "" so the Urdu message stays hidden (assets/pn.v4.js). Nothing changed.

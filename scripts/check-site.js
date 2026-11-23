@@ -3,7 +3,7 @@
 // every internal link points to a real page, the JSON-LD is valid, canonical addresses match the folder, sitemap lists every page.
 const fs = require("fs"), path = require("path");
 const ROOT = path.join(__dirname, "..");
-const BASE = "https://kickpulse-football.vercel.app";
+const BASE = String(process.env.KP_SITE_URL || "https://kickpulse-football.vercel.app").replace(/\/+$/, "");
 const bad = [], warn = [];
 const pages = [];
 (function walk(d) { for (const n of fs.readdirSync(d)) { if (["node_modules", ".git", "dist"].includes(n)) continue; const p = path.join(d, n); const s = fs.statSync(p); if (s.isDirectory()) walk(p); else if (n === "index.html") pages.push(p); } })(ROOT);
@@ -34,6 +34,9 @@ for (const f of ["scripts/prerender.js", "api/_espn.js", "assets/kp-fixtures.v3.
 for (const n of fs.readdirSync(ROOT)) if (/\.(js|css)$/.test(n) && n !== "site-config.js" && fs.statSync(path.join(ROOT, n)).isFile()) warn.push("file in the main folder that belongs in assets/ or scripts/: " + n);
 if (fs.existsSync(path.join(ROOT, "github"))) warn.push("folder \"github\" (without dot) should be deleted; workflows belong in .github/workflows/");
 if (!fs.existsSync(path.join(ROOT, ".github", "workflows", "refresh.yml"))) warn.push(".github/workflows/refresh.yml missing: the hourly refresh does not run");
+// After a build: the published HTML must not contain "Loading..." placeholders.
+const DIST = path.join(ROOT, "dist");
+if (fs.existsSync(DIST)) (function walk(d) { for (const n of fs.readdirSync(d)) { const p = path.join(d, n); if (fs.statSync(p).isDirectory()) walk(p); else if (n.endsWith(".html") && /<!--KP:[A-Z]+-->[^<]*(<p[^>]*>)?Loading/.test(fs.readFileSync(p, "utf8"))) warn.push("dist/" + path.relative(DIST, p) + ": still shows a Loading placeholder"); } })(DIST);
 if (process.argv.includes("--warn-only")) { bad.forEach((b) => warn.push("PROBLEM (not blocking): " + b)); bad.length = 0; }
 console.log("pages checked:", pages.length);
 warn.forEach((w) => console.log("  note:", w));

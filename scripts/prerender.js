@@ -31,6 +31,15 @@ const getJson = (u, ms) => {
 };
 const gj = getJson;
 const R = path.join(__dirname, ".."), OUT = path.join(R, "dist");
+// Site address in ONE place. To move to your own domain set KP_SITE_URL in Vercel (Settings > Environment Variables),
+// e.g. https://www.kickpulse.com - every page, JSON-LD, sitemap, robots and llms file is rewritten at build time.
+const OLD_SITE = "https://kickpulse-football.vercel.app", SITE = String(process.env.KP_SITE_URL || OLD_SITE).replace(/\/+$/, "");
+const BUILD_ISO = new Date().toISOString();
+// Text shown in the built HTML instead of "Loading..." when ESPN gave nothing at build time (never claims "no matches").
+const PH = { FXRES: "Recent results are shown when this page opens in your browser.", FXUP: "Upcoming matches are shown when this page opens in your browser.", CLANS: "The current table position is shown when this page opens in your browser.", TDANS: "Today's MLS matches are shown when this page opens in your browser.", STANS: "The current MLS standings are shown when this page opens in your browser.", RESANS: "The latest MLS results are shown when this page opens in your browser." };
+const noLoading = (h) => h.replace(/<!--KP:([A-Z]+)-->([\s\S]*?)<!--\/KP:\1-->/g, (all, tag, body) => (PH[tag] && /Loading/i.test(body) ? "<!--KP:" + tag + "-->" + body.replace(/Loading[^<]*/, PH[tag]) + "<!--/KP:" + tag + "-->" : all));
+// Google Fonts was linked twice (async + blocking); keep only the async one plus a noscript copy.
+const oneFont = (h) => { const re = /\n?\s*<link rel="stylesheet" href="(https:\/\/fonts\.googleapis\.com\/css2\?[^"]+)">/; return /fonts\.googleapis\.com\/css2[^"]*" media="print"/.test(h) ? h.replace(re, (a, u) => "<noscript><link rel=\"stylesheet\" href=\"" + u + "\"></noscript>") : h; };
 const SKIP = new Set([".git", ".github", "github", ".vercel", "node_modules", "dist", "api", "scripts", "_pages", "package.json", "prerender.js"]);
 // Files uploaded to the repo root by mistake that also exist in assets/ (same name) are not published.
 const ASSETN = (() => { try { return new Set(fs.readdirSync(path.join(R, "assets"))); } catch (e) { return new Set(); } })();
@@ -61,13 +70,14 @@ const watchdog = setTimeout(() => { done("time budget reached, finished with wha
 (async () => {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
-  for (const n of fs.readdirSync(R)) { if (SKIP.has(n) || stray(n) || /\.zip$|^README-DEPLOY\.txt$|^CHANGES-KICKPULSE\.txt$/.test(n)) continue; fs.cpSync(path.join(R, n), path.join(OUT, n), { recursive: true }); }
+  for (const n of fs.readdirSync(R)) { if (SKIP.has(n) || stray(n) || /\.zip$|^README-DEPLOY\.txt$|^CHANGES-KICKPULSE\.txt$|^DOMAIN-MOVE\.txt$/.test(n)) continue; fs.cpSync(path.join(R, n), path.join(OUT, n), { recursive: true }); }
   // Always serve the newest script: the highest-numbered assets/app.e2b39741.vN.min.js is used by every page in the deployed copy (now v7).
   const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : /\.html$/.test(e.name) ? [path.join(d, e.name)] : []));
   const vs = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^app\.e2b39741\.v([0-9]+)\.min\.js$/) || [])[1]).filter(Boolean).map(Number), top = vs.length ? Math.max.apply(null, vs) : 0;
   const lv = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^league-table\.b5e8a2e2\.v([0-9]+)\.js$/) || [])[1]).filter(Boolean).map(Number), ltop = lv.length ? Math.max.apply(null, lv) : 0;
   const pv = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^pn\.v([0-9]+)\.js$/) || [])[1]).filter(Boolean).map(Number), ptop = pv.length ? Math.max.apply(null, pv) : 0;
-  for (const f of walk(OUT)) { const h = fs.readFileSync(f, "utf8"); let n = h; if (top) n = n.replace(/app\.e2b39741\.v[0-9]+\.min\.js/g, "app.e2b39741.v" + top + ".min.js"); if (ltop) n = n.replace(/league-table\.b5e8a2e2\.v[0-9]+\.js/g, "league-table.b5e8a2e2.v" + ltop + ".js"); if (ptop) n = n.replace(/assets\/pn\.v[0-9]+\.js/g, "assets/pn.v" + ptop + ".js"); n = n.replace(/assets\/kp-fixtures\.v[0-9]+\.js/g, "assets/kp-fixtures.v" + VFX + ".js").replace(/assets\/kp-mls\.v[0-9]+\.js/g, "assets/kp-mls.v" + VMLS + ".js").replace(/assets\/kp-standings\.v[0-9]+\.js/g, "assets/kp-standings.v" + VSTD + ".js"); if (n !== h) fs.writeFileSync(f, n); }
+  for (const f of walk(OUT)) { const h = fs.readFileSync(f, "utf8"); let n = h; if (top) n = n.replace(/app\.e2b39741\.v[0-9]+\.min\.js/g, "app.e2b39741.v" + top + ".min.js"); if (ltop) n = n.replace(/league-table\.b5e8a2e2\.v[0-9]+\.js/g, "league-table.b5e8a2e2.v" + ltop + ".js"); if (ptop) n = n.replace(/assets\/pn\.v[0-9]+\.js/g, "assets/pn.v" + ptop + ".js"); n = n.replace(/assets\/kp-fixtures\.v[0-9]+\.js/g, "assets/kp-fixtures.v" + VFX + ".js").replace(/assets\/kp-mls\.v[0-9]+\.js/g, "assets/kp-mls.v" + VMLS + ".js").replace(/assets\/kp-standings\.v[0-9]+\.js/g, "assets/kp-standings.v" + VSTD + ".js"); n = oneFont(noLoading(n)); if (SITE !== OLD_SITE) n = n.split(OLD_SITE).join(SITE); if (n !== h) fs.writeFileSync(f, n); }
+  if (SITE !== OLD_SITE) for (const t of ["sitemap.xml", "sitemap-images.xml", "robots.txt", "llms.txt", "llms-full.txt"]) { try { const p = path.join(OUT, t), s = fs.readFileSync(p, "utf8"); fs.writeFileSync(p, s.split(OLD_SITE).join(SITE)); } catch (e) {} }
   const pages = [path.join(OUT, "index.html")].concat(fs.readdirSync(OUT).map((d) => path.join(OUT, d, "index.html")));
   let blogHtml = "";
   try { // latest Pitchside Notes articles, written into the HTML so Google sees them
@@ -101,6 +111,7 @@ const watchdog = setTimeout(() => { done("time budget reached, finished with wha
       const sd = await stP;
       if (sd && clm && STD.find(sd, clm[1])) { n = swap(swap(n, "CLANS", esc(STD.clubAns(sd, clm[1], clm[2]))), "CLCARD", STD.clubCard(sd, clm[1])); n = n.replace('id="kpclAns" data-ph="1"', 'id="kpclAns"'); }
       if (sd && stm && STD.groups(sd).length) { n = swap(swap(n, "STANS", esc(STD.ans(sd))), "STTBL", STD.tbl(sd)); n = n.replace('id="kpstAns" data-ph="1"', 'id="kpstAns"'); }
+      if (n !== html && !/"dateModified"/.test(n)) n = n.replace(/\{"@type":"WebPage",/, '{"@type":"WebPage","dateModified":"' + BUILD_ISO + '",');
       if (n !== html) { fs.writeFileSync(f, n); ok++; }
     } catch (e) { /* keep the page as it is */ }
   }));
@@ -108,8 +119,8 @@ const watchdog = setTimeout(() => { done("time budget reached, finished with wha
     const smp = path.join(OUT, "sitemap.xml"), today = new Date().toISOString().slice(0, 10);
     if (fs.existsSync(smp)) {
       let sm = fs.readFileSync(smp, "utf8");
-      ["", "mls-live-scores/", "mls-matches-today/", "mls-results/", "mls-standings/", "mls-schedule/", "mls-playoffs/", "inter-miami-live-score/"].forEach((u) => {
-        const loc = "https://kickpulse-football.vercel.app/" + u;
+      ["", "mls-live-scores/", "mls-matches-today/", "mls-results/", "mls-standings/", "mls-schedule/", "mls-playoffs/", "inter-miami-live-score/", "lafc-live-score/", "la-galaxy-live-score/", "seattle-sounders-live-score/", "columbus-crew-live-score/", "new-york-city-fc-live-score/", "atlanta-united-live-score/"].forEach((u) => {
+        const loc = SITE + "/" + u;
         sm = sm.replace(new RegExp("(<loc>" + loc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "</loc>\\s*<lastmod>)[^<]*(</lastmod>)"), "$1" + today + "$2");
       });
       fs.writeFileSync(smp, sm);

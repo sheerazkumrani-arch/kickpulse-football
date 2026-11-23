@@ -1,0 +1,13 @@
+KickPulse - moving to your own domain (do NOT do this until you decide; nothing has been switched)
+
+1. Buy the domain. In Vercel: Project > Settings > Domains > Add (e.g. www.kickpulse.com and kickpulse.com). Follow the DNS steps Vercel shows.
+2. Vercel > Settings > Environment Variables: add KP_SITE_URL = https://www.kickpulse.com (Production). Redeploy.
+   The build then writes the new address into every page, canonical, JSON-LD, sitemap, robots.txt and llms files.
+3. 301 redirects from the old address: Vercel > Settings > Domains > kickpulse-football.vercel.app > "Redirect to" www.kickpulse.com (301).
+   (Alternative in vercel.json, add at the top level:
+   "redirects": [{"source": "/:path*", "has": [{"type": "host", "value": "kickpulse-football.vercel.app"}], "destination": "https://www.kickpulse.com/:path*", "permanent": true}] )
+4. .github/workflows/indexnow.yml: replace kickpulse-football.vercel.app with the new domain (3 places + urlList).
+5. Search Console: add a new "Domain" property for kickpulse.com, verify with DNS, submit https://www.kickpulse.com/sitemap.xml.
+   In the OLD property: Settings > Change of address > pick the new property. Keep the old property and google...html file.
+6. Bing Webmaster Tools: add the new site, submit the sitemap.
+7. What to expect: traffic can dip for 2-6 weeks while Google moves the pages. Keep the redirects for at least 1 year (better: forever).
