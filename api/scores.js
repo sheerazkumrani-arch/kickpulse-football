@@ -60,5 +60,5 @@ module.exports = async (req, res) => {
       if (!v) transient++;
     })
   );
-  send(res, 200, out, transient ? "public, s-maxage=5" : "public, s-maxage=20, stale-while-revalidate=120");
+  send(res, 200, out, transient ? "public, s-maxage=5" : "public, s-maxage=30, stale-while-revalidate=300");
 };

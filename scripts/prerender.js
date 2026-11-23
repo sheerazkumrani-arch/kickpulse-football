@@ -7,12 +7,15 @@ const T0 = Date.now(), BUDGET = Number(process.env.KP_BUDGET_MS) || 180000; // a
 // Helper files are loaded safely: if one is missing from the repo the build still finishes (that part of the HTML is just not pre-filled).
 // A copy that was uploaded to the repo root by mistake is used as a second choice.
 const MISSING = [];
+// Newest version of a helper in assets/ (kp-fixtures.vN.js etc.), so a new version never needs edits here or in the pages.
+const newest = (base, min) => { try { const v = fs.readdirSync(path.join(__dirname, "..", "assets")).map((n) => (n.match(new RegExp("^" + base + "\\.v([0-9]+)\\.js$")) || [])[1]).filter(Boolean).map(Number); return Math.max.apply(null, v.concat([min])); } catch (e) { return min; } };
+const VFX = newest("kp-fixtures", 3), VMLS = newest("kp-mls", 1), VSTD = newest("kp-standings", 2);
 const safe = (...ps) => { for (const p of ps) { try { return require(p); } catch (e) { if (e && e.code !== "MODULE_NOT_FOUND") console.log("helper file has an error, skipped:", p, e.message); } } MISSING.push(ps[0]); console.log("helper file missing, skipped:", ps[0]); return null; };
 const ESPN = safe("../api/_espn") || { getJson: () => Promise.resolve({ status: 0, data: null }) };
-const FX = safe("../assets/kp-fixtures.v3.js", "../kp-fixtures.v3.js") || { collect: () => Promise.resolve(null), norm: () => null, list: () => "", fmtUtc: () => "" };
+const FX = safe("../assets/kp-fixtures.v" + VFX + ".js", "../assets/kp-fixtures.v3.js", "../kp-fixtures.v3.js") || { collect: () => Promise.resolve(null), norm: () => null, list: () => "", fmtUtc: () => "" };
 if (typeof FX.norm !== "function") FX.norm = () => null; // an older kp-fixtures.v3.js without norm must not break the fallback
-const MLS = safe("../assets/kp-mls.v1.js", "../kp-mls.v1.js") || { today: () => ({}), ans: () => "", tbl: () => "", resAns: () => "", resHtml: () => "" };
-const STD = safe("../assets/kp-standings.v2.js", "../kp-standings.v2.js") || { find: () => null, groups: () => [], ans: () => "", tbl: () => "", clubAns: () => "", clubCard: () => "" };
+const MLS = safe("../assets/kp-mls.v" + VMLS + ".js", "../assets/kp-mls.v1.js", "../kp-mls.v1.js") || { today: () => ({}), ans: () => "", tbl: () => "", resAns: () => "", resHtml: () => "" };
+const STD = safe("../assets/kp-standings.v" + VSTD + ".js", "../assets/kp-standings.v2.js", "../kp-standings.v2.js") || { find: () => null, groups: () => [], ans: () => "", tbl: () => "", clubAns: () => "", clubCard: () => "" };
 const STAT = {}; // how ESPN answered during this build (printed at the end, visible in the Vercel build log)
 const MEMO = new Map(); let calls = 0, memoHits = 0, overBudget = 0;
 // Every ESPN request goes through here: identical URLs are fetched once, nothing new starts after the time budget.
@@ -64,7 +67,7 @@ const watchdog = setTimeout(() => { done("time budget reached, finished with wha
   const vs = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^app\.e2b39741\.v([0-9]+)\.min\.js$/) || [])[1]).filter(Boolean).map(Number), top = vs.length ? Math.max.apply(null, vs) : 0;
   const lv = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^league-table\.b5e8a2e2\.v([0-9]+)\.js$/) || [])[1]).filter(Boolean).map(Number), ltop = lv.length ? Math.max.apply(null, lv) : 0;
   const pv = fs.readdirSync(path.join(OUT, "assets")).map((n) => (n.match(/^pn\.v([0-9]+)\.js$/) || [])[1]).filter(Boolean).map(Number), ptop = pv.length ? Math.max.apply(null, pv) : 0;
-  for (const f of walk(OUT)) { const h = fs.readFileSync(f, "utf8"); let n = h; if (top) n = n.replace(/app\.e2b39741\.v[0-9]+\.min\.js/g, "app.e2b39741.v" + top + ".min.js"); if (ltop) n = n.replace(/league-table\.b5e8a2e2\.v[0-9]+\.js/g, "league-table.b5e8a2e2.v" + ltop + ".js"); if (ptop) n = n.replace(/assets\/pn\.v[0-9]+\.js/g, "assets/pn.v" + ptop + ".js"); if (n !== h) fs.writeFileSync(f, n); }
+  for (const f of walk(OUT)) { const h = fs.readFileSync(f, "utf8"); let n = h; if (top) n = n.replace(/app\.e2b39741\.v[0-9]+\.min\.js/g, "app.e2b39741.v" + top + ".min.js"); if (ltop) n = n.replace(/league-table\.b5e8a2e2\.v[0-9]+\.js/g, "league-table.b5e8a2e2.v" + ltop + ".js"); if (ptop) n = n.replace(/assets\/pn\.v[0-9]+\.js/g, "assets/pn.v" + ptop + ".js"); n = n.replace(/assets\/kp-fixtures\.v[0-9]+\.js/g, "assets/kp-fixtures.v" + VFX + ".js").replace(/assets\/kp-mls\.v[0-9]+\.js/g, "assets/kp-mls.v" + VMLS + ".js").replace(/assets\/kp-standings\.v[0-9]+\.js/g, "assets/kp-standings.v" + VSTD + ".js"); if (n !== h) fs.writeFileSync(f, n); }
   const pages = [path.join(OUT, "index.html")].concat(fs.readdirSync(OUT).map((d) => path.join(OUT, d, "index.html")));
   let blogHtml = "";
   try { // latest Pitchside Notes articles, written into the HTML so Google sees them

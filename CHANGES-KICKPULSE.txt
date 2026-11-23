@@ -100,3 +100,14 @@ KickPulse update 20 (Nov 2026) - Production deploy fixed (red cross)
 - vercel.json: buildCommand also runs the checker as a warning step (never blocks the deploy).
 - package.json (new, no dependencies): engines node 22.x, so Vercel never uses a retired Node version.
 - .github/workflows/refresh.yml, indexnow.yml: same content, now in the right folder (they never ran from "github/").
+
+KickPulse update 21 (Nov 2026) - lists filled by JavaScript now load through our own /api (for Googlebot)
+- Cause: in Search Console's live test, the cross-site ESPN calls (site.api.espn.com/.../scoreboard?dates=A-B and &limit=300) showed "Other error". Those exact URLs come from the "Recent results / Upcoming matches" box, MLS today / MLS results and the standings/club cards, which asked ESPN directly from the browser. Google's renderer often does not fetch such third-party resources, so it did not see those lists.
+- assets/kp-fixtures.v4.js (replaces v3): the browser asks /api/scores (same site, edge cached) first; direct ESPN only if that fails. Build-time behaviour unchanged.
+- assets/kp-mls.v2.js (replaces v1): uses the same /api route.
+- assets/kp-standings.v3.js (replaces v2): /api/standings?league=usa.1 first, ESPN direct as fallback.
+- api/scores.js: edge cache 30 s + stale-while-revalidate 300 s (was 20/120). The fallbacks inside it (range -> without limit -> single days -> ESPN default day) are unchanged.
+- scripts/prerender.js: always uses the newest kp-fixtures / kp-mls / kp-standings in assets/ and switches every page to it at build time, so no page file needed editing. Build-time HTML (for Google) is still written as before.
+- robots.txt checked: "Allow: /" does not block /api/. Nothing changed there.
+- Not changed: the main app script (app.e2b39741.v11.min.js) already asks /api/scores first and ESPN only as a fallback.
+- Old files no longer used after this deploy: assets/kp-fixtures.v3.js, assets/kp-mls.v1.js, assets/kp-standings.v2.js (keep them for now; the build uses them if a new file is missing).
