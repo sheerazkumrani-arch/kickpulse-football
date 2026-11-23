@@ -1,0 +1,128 @@
+KickPulse update 5 (Nov 2026)
+- Live scores: server now sends browser-like headers to ESPN; only a real 404 counts as 'no matches'; league pages fall back to loading ESPN directly if the server list is empty.
+- New /api/health page shows whether Vercel can reach ESPN.
+- Pitchside Notes bar is bigger, colourful and the button pulses.
+- New file names (app...v3.min.js, kp-leagues.v4.css) so browsers drop the old cached files.
+
+KickPulse update 6 (Nov 2026)
+- mls-live-scores: new block "MLS scoreboard: live scores, results and matchups" (class kp-mls3) written from Search Console queries
+  (mls scores, mls scoreboard, mls results, mls matchups, livescore mls...), plus 5 new FAQs (also added to FAQPage JSON-LD).
+- mls-schedule: short "MLS matchups this week" paragraph.
+- api/_espn.js: shared in-memory cache - visitors in the same seconds share one ESPN call; last good copy is served if ESPN is slow or down.
+- api/scores.js, standings.js, summary.js: shorter ESPN timeout (5-6 s), cache times passed in. Titles, URLs, design, JS files untouched.
+
+KickPulse update 7 (Nov 2026) - fix "Could not load live scores / HTTP 400" on MLS pages
+- api/scores.js: when ESPN answers 400 for a league, it now retries simpler versions (without limit, day by day, ESPN default day); a final 400 = "no matches" instead of an error.
+- assets/app.e2b39741.v4.min.js (new name so browsers drop the old file): trusts the server answer, and an ESPN 400/404 on the direct fallback shows "no matches" instead of an error. All pages point to v4.
+
+KickPulse update 8 (Nov 2026) - friendly "no matches" box instead of "Could not load live scores / HTTP 400"
+- assets/app.e2b39741.v5.min.js (new name so browsers drop the old file; all pages point to it).
+- When a league has no matches (or ESPN answers 400/404), the page now shows a blinking box: "No MLS matches today ... read our previous MLS match previews and articles on Pitchside Notes", with the matching articles (read live from kickpulse-final.vercel.app/articles.json) and the last 3 finished results of that league.
+- Articles are matched to the league by words in the title, description, URL (or optional "league", "tags", "category", "keywords" fields in articles.json). Keywords per league are in the KK list at the top of the JS file.
+- If no article matches the league, the latest 3 Pitchside Notes articles are shown instead.
+- Technical text like "HTTP 400" is never shown to visitors. Only a real offline browser shows "You seem to be offline".
+
+KickPulse update 9 (Nov 2026) - ESPN live scores work again + Pitchside slider
+- assets/app.e2b39741.v7.min.js (all pages now point to it; v5 was still in use, v6 was never linked):
+  * League pages (MLS, Premier League ...) ask ESPN straight from the visitor's browser FIRST (the way that always worked),
+    and use /api/scores only as a backup. An empty answer from the server is no longer trusted as "no matches".
+  * Home / all-leagues pages: one /api/scores call; if the server returns nothing at all, the browser asks ESPN itself.
+  * Refresh button and midnight rollover from v6 included. Interface, design and text are unchanged.
+- assets/pn.v2.js (pages point to it): top bar and the Pitchside box now slide through ALL articles from the blog's articles.json
+  (arrows, dots, swipe, auto-slide, pauses on hover/touch). If the blog is unreachable the built-in text stays.
+
+KickPulse update 10 (Nov 2026) - step 1: big league buttons + side menu (MLS first)
+- New file assets/kp-side.v1.css (new name so browsers drop old cache); all 23 pages with the old league bar now use the new menu and link to it.
+- League bar replaced by big, rounded buttons with coloured icons. MLS is the biggest, first button, with its own sub-buttons (Live scores, Schedule, On TV, Playoffs, Inter Miami, Matches today).
+- Menu shows only: MLS, All leagues, Saudi Pro League, Premier League, La Liga, Champions League, Serie A, Bundesliga. Other leagues (Ligue 1, Europa, Conference, Nations League, FA Cup, World Cup 2026) stay live at the same URLs and are linked in a small "More" line under the side menu.
+- League and MLS pages on desktop (1100px+): fixed menu on the left side. Phones and other pages: one row of big buttons (swipe on phones). No dropdowns.
+- Old MLS text row (kphubbar) is hidden only when the side menu shows it. No page text, titles, URLs or scripts were changed.
+
+KickPulse update 11 (Nov 2026) - step 2: recent results + upcoming matches on league pages
+- New block above the league table on: MLS (live scores, schedule, on TV, playoffs), Inter Miami, Saudi Pro League, Premier League, La Liga, Champions League, Serie A, Bundesliga.
+  Left "Recent results" (last 10 finished games), right "Upcoming matches" (next 10). Inter Miami page: only Inter Miami games (5 + 5). Shown whether or not a match is live.
+- Works with ESPN's date-range scoreboard, asked from the visitor's browser in 14/28-day steps until enough games are found (MLS looks up to ~4 months ahead for the next season). ESPN "400/404 = nothing here" is treated as empty, never as an error. Result is kept 5 minutes per visitor (sessionStorage).
+- scripts/prerender.js writes the same lists into the HTML at deploy (UTC times) so Google sees real content; the browser then replaces them with local times. If ESPN is not reachable the page keeps its placeholder text.
+- New files: assets/kp-fixtures.v2.js, assets/kp-fx.v1.css. Existing text, scripts and API routes are not changed.
+
+KickPulse update 12 (Nov 2026) - fix empty "Recent results / Upcoming matches" boxes
+- Cause: ESPN refuses long date ranges (HTTP 400) and the block read that as "no matches". Now it asks in 3-day windows like the main app, and if ESPN refuses a range it asks day by day. A refused range is never treated as "no matches"; if ESPN cannot be reached the boxes say so instead of claiming there are no games.
+- Build time (prerender) writes lists into the HTML only when it really got matches.
+- assets/kp-fixtures.v1.js replaced by assets/kp-fixtures.v2.js (new name because /assets is cached for a year). The 11 pages point to v2. You may delete the old v1 file from GitHub.
+
+KickPulse update 13 (Nov 2026) - step 3A: new MLS pages built around Search Console keywords
+- New page /mls-matches-today/ (keywords: mls matches today, mls games tonight, mls today games, mls match today). Top summary sentence + table of today's MLS games in US Eastern, US Pacific, Pakistan time and the visitor's own time; if there is no game today it shows the next match day. Day = US Eastern date. Refreshes every 2 minutes while open.
+- New page /mls-results/ (keywords: mls results, results yesterday, last night). Summary sentence + last ~40 results grouped by match day, newest first.
+- Both pages: own title/description/canonical, BreadcrumbList + FAQPage schema (same text as the visible FAQ), original text, links to all MLS pages. Lists are also written into the HTML at deploy (prerender.js).
+- /mls-live-scores/: existing text untouched; one new section at the bottom ("MLS scoreboard, live score and results" + 4 questions, also added to its FAQ schema) that links to the two new pages.
+- Side menu: new buttons Matches today and Results. MLS text row (phones) got "MLS today" and "Results". sitemap.xml has the 2 new URLs (lastmod 2026-11-20).
+- Files: assets/kp-fixtures.v3.js (replaces v2), assets/kp-mls.v1.js, assets/kp-mls.v1.css. You may delete assets/kp-fixtures.v2.js from GitHub.
+
+KickPulse update 14 (Nov 2026) - new look "Pitch Green" (design only, no functions changed)
+- New assets/kp-theme.v1.css (loaded last on every page): deep pitch-green + gold instead of many colours, no blue-green gradient headings, condensed uppercase headings (Barlow Condensed), light chalk background, rounded white cards. Colours and type only.
+- New assets/kp-side.v2.css (replaces kp-side.v1.css): bigger condensed side menu / button strip. All league buttons use one colour; MLS card is dark green with a gold ring; the open page is dark green.
+- Pitchside Notes bar: dark green strip, blinking gold dot, blinking gold Read button. It still slides through all blog articles every 5 seconds. assets/pn.v3.js (replaces pn.v2.js): same logic, new colours, plus "Read in French" and "Read in Urdu" messages in the bar and as last two slides of the box, and an "Also available in Francais / Urdu" line in the box.
+  TODO: open assets/pn.v3.js and put the exact French and Urdu blog page addresses into FR_URL and UR_URL (top of the file). Until then both open the blog home page.
+- Google Fonts link now also loads Barlow Condensed. Old files kp-side.v1.css and pn.v2.js can be deleted from GitHub.
+- MLS text row: the right-hand "Matches today" (all football) is now called "All matches today" so it is not confused with the new "MLS today".
+
+KickPulse update 15 (Nov 2026) - step 3B: MLS standings page
+- New page /mls-standings/ (keywords: mls standings, mls table, mls league table, eastern/western conference standings). Summary sentence (leader of each conference + most points overall) and both conference tables with P W D L GF GA GD Pts; refreshed every 3 minutes while open; also written into the HTML at deploy (prerender.js). Title/description/canonical, BreadcrumbList + FAQPage schema, original text, links to the other MLS pages.
+- New files: assets/kp-standings.v1.js, assets/kp-st.v1.css.
+- Side menu and MLS text row got a "Standings" button; the other new MLS pages and /mls-live-scores/ link to the standings page; sitemap.xml has the new URL.
+
+KickPulse update 16 (Nov 2026) - step 3C: fresh HTML for Google
+- scripts/prerender.js: if ESPN refuses the dated requests at build time, the recent/upcoming lists, "MLS matches today" and "MLS results" are filled from the plain scoreboard instead of staying on "Loading". Nothing is written when there is nothing to say (never "no matches" from the build). The build log now prints how ESPN answered ("ESPN answers during this build"). sitemap.xml lastmod of the live pages is set to the build date. .github is not published.
+- NEW .github/workflows/refresh.yml: asks Vercel to rebuild every hour (needs the GitHub secret VERCEL_DEPLOY_HOOK).
+- NEW .github/workflows/indexnow.yml + root file 9b0a1b976d9e17a1b950fae47a2496d1.txt: pings Bing/IndexNow with the MLS pages every 6 hours.
+- llms.txt: new MLS pages block. robots.txt unchanged: User-agent * Allow / already lets search and AI crawlers in.
+- assets/kp-fixtures.v3.js: only exports norm for the build (browser behaviour unchanged).
+
+KickPulse update 17 (Nov 2026) - MLS club pages
+- New pages: /lafc-live-score/, /la-galaxy-live-score/, /seattle-sounders-live-score/, /columbus-crew-live-score/, /new-york-city-fc-live-score/, /atlanta-united-live-score/ (same pattern as the existing Inter Miami page).
+  Each has: summary sentence + cards with the club's position in its conference (points, played, W-D-L, goal difference); recent results and upcoming matches of that club only; its own text (stable facts only), 5 questions + FAQ schema, SportsTeam + Breadcrumb schema; links to the other MLS pages and clubs.
+- Links to the clubs from /mls-standings/, /mls-live-scores/ (new block only) and the Inter Miami page ("More MLS clubs"). The side menu is unchanged on purpose (no clutter); on club pages the MLS button stays highlighted. sitemap.xml and llms.txt list the new pages.
+- assets/kp-standings.v1.js replaced by kp-standings.v2.js (adds club lookup); new assets/kp-club.v1.css. scripts/prerender.js writes the club table position into the HTML. You may delete assets/kp-standings.v1.js from GitHub.
+
+KickPulse update 18 (Nov 2026) - Saudi Pro League fix + French link
+- Saudi Pro League: the site used the code "sau.1", but ESPN's code for the Saudi Pro League is "ksa.1" (checked on ESPN's own table pages). That is why the table said "Could not load" and matches/results were empty. Fixed in assets/app.e2b39741.v11.min.js (new copy of v10), assets/league-table.b5e8a2e2.v3.js (new copy of v2) and the Saudi page (data-league / data-slug). scripts/prerender.js now also picks the newest league-table script by itself (like app and pn), so no page needed editing.
+- Pitchside Notes bar: assets/pn.v4.js (replaces pn.v3.js) reads the French and Urdu addresses from site-config.js (lang: fr / ur). French is set to https://kickpulse-final.vercel.app/fr/. Urdu is empty for now, so the Urdu message and button are hidden until you paste its address. No file other than site-config.js has to change later.
+- You may delete assets/pn.v3.js, app.e2b39741.v10.min.js, league-table.b5e8a2e2.v2.js from GitHub (old copies, no longer used).
+
+KickPulse update 19 (Nov 2026) - the build can no longer fail because of a missing helper file
+- scripts/prerender.js loads kp-fixtures, kp-mls, kp-standings and api/_espn safely. If one of them is missing from the repo (for example the assets folder was not uploaded yet), the build still finishes and only that part of the HTML is not pre-filled. Before this, a missing helper stopped the whole deploy ("Production" with a red cross).
+
+KickPulse update 20 (Nov 2026) - Production deploy fixed (red cross)
+- Real cause: files were uploaded into the MAIN folder instead of their folders. The new scripts/prerender.js (update 19) and assets/kp-standings.v2.js, assets/kp-club.v1.css, assets/kp-fixtures.v3.js (update 16/17 versions) were in the root. So GitHub still had the OLD scripts/prerender.js, which loads assets/kp-standings.v2.js directly; that file did not exist in assets/, Node stopped with "Cannot find module" and Vercel showed the red cross. Club pages and /mls-standings/ also asked the browser for the two missing files.
+- assets/kp-standings.v2.js, assets/kp-club.v1.css, assets/kp-fixtures.v3.js: now in assets/ (same content as the copies in the root; kp-fixtures.v3.js is the version that exports norm).
+- scripts/prerender.js: helper files loaded safely (root copy as second choice), global ESPN time budget of 3 minutes (KP_BUDGET_MS), identical ESPN URLs fetched once, watchdog, always exits with code 0, one line "KICKPULSE BUILD SUMMARY: ..." at the end. Not published: github/, prerender.js and root js/css copies that also exist in assets/, package.json. Page text, URLs and design unchanged.
+- scripts/check-site.js: checks that the build files are in the right folders, warns about files in the main folder, the "github" folder and a missing .github/workflows. New option --warn-only.
+- vercel.json: buildCommand also runs the checker as a warning step (never blocks the deploy).
+- package.json (new, no dependencies): engines node 22.x, so Vercel never uses a retired Node version.
+- .github/workflows/refresh.yml, indexnow.yml: same content, now in the right folder (they never ran from "github/").
+
+KickPulse update 21 (Nov 2026) - lists filled by JavaScript now load through our own /api (for Googlebot)
+- Cause: in Search Console's live test, the cross-site ESPN calls (site.api.espn.com/.../scoreboard?dates=A-B and &limit=300) showed "Other error". Those exact URLs come from the "Recent results / Upcoming matches" box, MLS today / MLS results and the standings/club cards, which asked ESPN directly from the browser. Google's renderer often does not fetch such third-party resources, so it did not see those lists.
+- assets/kp-fixtures.v4.js (replaces v3): the browser asks /api/scores (same site, edge cached) first; direct ESPN only if that fails. Build-time behaviour unchanged.
+- assets/kp-mls.v2.js (replaces v1): uses the same /api route.
+- assets/kp-standings.v3.js (replaces v2): /api/standings?league=usa.1 first, ESPN direct as fallback.
+- api/scores.js: edge cache 30 s + stale-while-revalidate 300 s (was 20/120). The fallbacks inside it (range -> without limit -> single days -> ESPN default day) are unchanged.
+- scripts/prerender.js: always uses the newest kp-fixtures / kp-mls / kp-standings in assets/ and switches every page to it at build time, so no page file needed editing. Build-time HTML (for Google) is still written as before.
+- robots.txt checked: "Allow: /" does not block /api/. Nothing changed there.
+- Not changed: the main app script (app.e2b39741.v11.min.js) already asks /api/scores first and ESPN only as a fallback.
+- Old files no longer used after this deploy: assets/kp-fixtures.v3.js, assets/kp-mls.v1.js, assets/kp-standings.v2.js (keep them for now; the build uses them if a new file is missing).
+
+KickPulse update 22 (Nov 2026) - league codes, fresh HTML, SEO, domain, speed
+- League code audit (tested live through /api/scores and /api/standings): all league page codes work (eng.1, esp.1, ita.1, ger.1, fra.1, ksa.1, usa.1, uefa.champions, uefa.europa, uefa.europa.conf, uefa.nations, eng.fa). kor.1 and egy.1 returned nothing from ESPN for Sept-Nov 2026 and the table route fails, so they were removed from the app list: assets/app.e2b39741.v12.min.js (copy of v11 without those two). Tournaments that are out of season (World Cup qualifying, Euro, Copa America...) are kept.
+- Built HTML never shows "Loading...": if ESPN gave nothing at build time the placeholders get a neutral sentence (never "no matches"); the browser still fills in the real list. The checker warns if dist/ still has a Loading placeholder.
+- dateModified (build time) added to the WebPage JSON-LD of every page that got live data. Sitemap lastmod now also updated for the 6 new club pages.
+- /inter-miami-live-score/: JSON-LD now has SportsTeam (about), @id, isPartOf and a BreadcrumbList matching the visible breadcrumb (like the other club pages). No visible text changed.
+- Domain readiness: the site address lives in one place (KP_SITE_URL in Vercel, default https://kickpulse-football.vercel.app). Nothing switched. See DOMAIN-MOVE.txt.
+- Speed: every page loaded the Google Fonts CSS twice, once without blocking and once blocking. The build now keeps only the non-blocking link (plus a noscript copy). Look unchanged.
+- .github/workflows/indexnow.yml: also pings the 6 club pages. refresh.yml checked (hourly, needs VERCEL_DEPLOY_HOOK) - unchanged.
+- site-config.js languages checked: fr is set, ur is "" so the Urdu message stays hidden (assets/pn.v4.js). Nothing changed.
+
+
+== Update 23 ==
+- assets/app.e2b39741.v13.min.js: league pages now load matches from /api/scores FIRST (no parallel direct ESPN call). Direct ESPN only as fallback if /api fails. 'Next matches' box also uses /api. Fixes Search Console 'page resources could not be loaded' (site.api.espn.com XHR).
+- Build auto-uses the newest app version (v13). v12 can stay as backup.
